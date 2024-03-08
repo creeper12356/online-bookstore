@@ -1,4 +1,3 @@
-import LoginForm from "./components/LoginForm";
 import AppRouter from "./components/AppRouter";
 
 function App() {

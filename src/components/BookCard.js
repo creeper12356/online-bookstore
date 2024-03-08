@@ -1,22 +1,33 @@
-import {Button, Card, CardActions, CardContent, CardHeader, CardMedia} from "@mui/material";
-
+import {Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
+import '../css/BookCard.css'
 const BookCard = ({ img, title, price, alt}) => {
     return (
-        <Card sx={{ minWidth:275, maxWidth: 400}}>
+        <Card className="book-card">
             <CardHeader>
                 Book
             </CardHeader>
             <CardMedia
+                className="book-card-img"
                 component="img"
                 image={img}
                 alt={alt}
             />
-            <CardContent>
-                <div>{title}</div>
-                <div>{price}</div>
+            <CardContent className="book-card-title">
+                <Typography component="h1" variant="h5">
+                    {title}
+                </Typography>
             </CardContent>
-            <CardActions>
-                <Button size="large">Buy</Button>
+            <CardContent className="book-card-price">
+                <Typography component="h1" variant="h5">
+                    {`￥${price}`}
+                </Typography>
+            </CardContent>
+            <CardActions className="book-card-button">
+                <Button className="book-card-button">
+                    <Typography component="h1" variant="h5">
+                        Buy
+                    </Typography>
+                </Button>
             </CardActions>
         </Card>
     );
