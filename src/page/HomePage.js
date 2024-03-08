@@ -1,18 +1,19 @@
 import {
-    Box, ImageList, ImageListItem,
-    Toolbar
+    Box, ImageList, ImageListItem, Toolbar
 } from "@mui/material";
 import BookCard from "../components/BookCard";
 import Navigator from "../components/Navigator";
 import SideBar from "../components/SideBar";
+import SearchBar from "../components/SearchBar";
 
 const HomePage = () => {
     return (
         <Box sx={{display: 'flex'}}>
             <Navigator />
             <SideBar />
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <Toolbar />
+            <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                <Toolbar/>
+                <SearchBar />
                 <ImageList
                     cols={4}
                 >
