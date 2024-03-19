@@ -1,6 +1,6 @@
 import {
-    Avatar,
-    Button,
+    Avatar, bottomNavigationActionClasses,
+    Button, Checkbox,
     Container,
     FormControlLabel,
     Link,
@@ -8,11 +8,24 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {CheckBox} from "@mui/icons-material";
 import Navigator from "../components/Navigator";
 
 import '../css/LoginPage.css'
+import {login} from "../service/login";
+import {useState} from "react";
+import {useNavigate} from "react-router";
 const LoginPage = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isRememberMe, setRememberMe] = useState(false);
+    const navigate = useNavigate();
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        let result = await login(username, password);
+        if (result.ok) {
+            navigate('/');
+        }
+    }
     return (
         <>
             <Navigator />
@@ -23,7 +36,7 @@ const LoginPage = () => {
                         <Typography component="h1" variant="h5">
                             Login
                         </Typography>
-                        <form>
+                        <form onSubmit={onSubmit}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -33,6 +46,9 @@ const LoginPage = () => {
                                 label="Username"
                                 type="text"
                                 id="username"
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                }}
                             />
 
                             <TextField
@@ -44,16 +60,26 @@ const LoginPage = () => {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
                             />
                             <FormControlLabel
-                                control={<CheckBox value="remember" color="primary"/>}
+                                control={
+                                <Checkbox
+                                    value="remember"
+                                    color="primary"
+                                    onChange={(e)=> {
+                                        setRememberMe(e.target.checked);
+                                    }}
+                                />}
                                 label="Remember me"
                             />
+
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                href="/"
                             >
                                 Log in
                             </Button>
