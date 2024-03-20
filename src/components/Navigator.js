@@ -1,52 +1,43 @@
-import {AppBar, Badge, Box, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Badge, Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {useState} from "react";
 
 const Navigator = () => {
+    const [menuIndex, setMenuIndex] = useState(0);
     return (
         <AppBar
             position="fixed"
-            sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            sx={{backgroundColor: 'white'}}
         >
             <Toolbar>
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Box
-                    sx={{ flexGrow: 1 }}
-                >
-                    <Typography
-                        component="h1"
-                        variant="h5"
-                    >
-                        Online Bookstore
-                    </Typography>
+                <Box>
+                    <Link href="/" underline="none">
+                        <Typography
+                            component="h1"
+                            variant="h5"
+                            sx={{
+                                color: 'steelblue',
+                                paddingRight: 10,
+                            }}
+                        >
+                            Book Store
+                        </Typography>
+                    </Link>
+
                 </Box>
+                <Tabs value={menuIndex} onChange={(e, index) => {setMenuIndex(index); }}>
+                    <Tab label="首页"/>
+                    <Tab label="购物车" />
+                    <Tab label="订单" />
+                    <Tab label="排行" />
+                </Tabs>
+                <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                        <Badge badgeContent={4} color="error">
-                            <MailIcon />
-                        </Badge>
-                    </IconButton>
                     <IconButton
                         size="large"
-                        aria-label="show 17 new notifications"
-                        color="inherit"
-                    >
-                        <Badge badgeContent={17} color="error">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        color="inherit"
                     >
                         <AccountCircleIcon />
                     </IconButton>
