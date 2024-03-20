@@ -1,5 +1,5 @@
 import {
-    Avatar, bottomNavigationActionClasses,
+    Avatar,
     Button, Checkbox,
     Container,
     FormControlLabel,
@@ -14,6 +14,7 @@ import '../css/LoginPage.css'
 import {login} from "../service/login";
 import {useState} from "react";
 import {useNavigate} from "react-router";
+
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -22,10 +23,12 @@ const LoginPage = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         let result = await login(username, password);
-        if (result.ok) {
+        if(result.ok) {
             navigate('/');
         }
-    }
+    };
+
+
     return (
         <>
             <Navigator />
