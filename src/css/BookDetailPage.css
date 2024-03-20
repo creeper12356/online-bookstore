@@ -1,0 +1,31 @@
+.book-detail-divider-text {
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+    text-align: center;
+}
+.book-detail-box {
+    margin: 10px 0;
+}
+.book-detail-button {
+
+}
+.price-box-container {
+    background-color: rgb(252, 250, 247);
+    padding: 20px;
+    width: 100%;
+}
+.price-box-text {
+    color: rgba(0, 0, 0, 0.45);
+}
+.price-box-price {
+    color: rgb(221, 55, 53);
+    font-size: 30px;
+}
+.price-box-tag {
+    background-color: rgb(244, 132, 132);
+    padding: 0px 4px;
+    border-radius: 5px;
+    color: white;
+}

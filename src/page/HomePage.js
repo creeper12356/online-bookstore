@@ -35,6 +35,7 @@ const HomePage = () => {
                                 title={book.title}
                                 alt={book.alt}
                                 price={book.price}
+                                href={`/book/${book.id}`}
                             />
                         </ImageListItem>
                     ))}
