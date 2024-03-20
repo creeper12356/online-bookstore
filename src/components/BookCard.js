@@ -22,13 +22,6 @@ const BookCard = ({ img, title, price, alt}) => {
                     {`￥${price}`}
                 </Typography>
             </CardContent>
-            <CardActions className="book-card-button">
-                <Button className="book-card-button">
-                    <Typography component="h1" variant="h5">
-                        Buy
-                    </Typography>
-                </Button>
-            </CardActions>
         </Card>
     );
 }
