@@ -3,6 +3,7 @@ import HomePage from "../page/HomePage";
 import {BrowserRouter} from "react-router-dom";
 import LoginPage from "../page/LoginPage";
 import BookDetailPage from "../page/BookDetailPage";
+import CartPage from "../page/CartPage";
 
 const AppRouter = () => {
     return (
@@ -16,6 +17,10 @@ const AppRouter = () => {
                 <Route
                     path="/book/:id"
                     element={<BookDetailPage />}
+                />
+                <Route
+                    path="/cart"
+                    element={<CartPage />}
                 />
                 <Route
                     path="/login"

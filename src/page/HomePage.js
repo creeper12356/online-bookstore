@@ -1,11 +1,11 @@
 import {
-    Box, ImageList, ImageListItem, Toolbar
+    ImageList, ImageListItem
 } from "@mui/material";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import {useEffect, useState} from "react";
 import {getBooks} from "../service/book";
-import {BasicLayout, PrivateLayout} from "../components/Layout";
+import { PrivateLayout} from "../components/Layout";
 
 const HomePage = () => {
     const [bookList, setBookList] = useState([]);
