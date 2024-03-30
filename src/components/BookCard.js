@@ -1,9 +1,9 @@
-import {Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
+import {Card, CardActionArea, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
 import '../css/BookCard.css'
 const BookCard = ({ img, title, price, alt, href}) => {
     return (
         <Card className="book-card">
-            <CardActionArea href={href}>
+            <CardActionArea href={href} className="book-card-action-area">
                 <CardHeader>
                     Book
                 </CardHeader>
