@@ -24,12 +24,15 @@ const columns = [
 
 const CartPage = () => {
     const [cartItemList, setCartItemList] = useState([]);
+    const [selectedCartItemCount, setSelectedCartItemCount] = useState(0);
     const getCartItemList = async () => {
-        setCartItemList(await getCartItems());
+        let res = await getCartItems();
+        setCartItemList(res.map(cartItem => {
+            return {...cartItem, selected: false} ;
+        }));
     };
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(20);
-    const [selectedItemIndexList, setSelectedItemIndexList] = useState([]);
     const [totalChecked, setTotalChecked] = useState(false);
     const [totalIndeterminate, setTotalIndeterminate] = useState(false);
 
@@ -38,9 +41,29 @@ const CartPage = () => {
         getCartItemList();
     }, []);
     useEffect(() => {
-        setTotalChecked(selectedItemIndexList.length === cartItemList.length);
-        setTotalIndeterminate(selectedItemIndexList.length && selectedItemIndexList.length !== cartItemList.length);
-    }, [cartItemList, selectedItemIndexList]);
+        let count = cartItemList.filter(cartItem => cartItem.selected).length;
+        setSelectedCartItemCount(count)
+        setTotalChecked(cartItemList.length && count === cartItemList.length);
+        setTotalIndeterminate(count && count !== cartItemList.length);
+    }, [cartItemList]);
+
+    const handleTotalCheckboxChange = () => {
+        setCartItemList(cartItemList.map(cartItem => {
+            return {...cartItem, selected: !totalChecked};
+        }));
+    };
+    const handleItemCheckboxChange = (id, selected) => {
+        setCartItemList(cartItemList.map(cartItem =>
+            cartItem.id === id ?
+                {...cartItem, selected: selected} :
+                cartItem));
+    };
+
+    const handleCartItemDelete = async (id) => {
+        setCartItemList(cartItemList.filter(cartItem => cartItem.id !== id));
+        await deleteCartItem(id);
+    };
+
     return (
         <PrivateLayout>
             <TableContainer>
@@ -50,9 +73,8 @@ const CartPage = () => {
                             <Checkbox
                                 checked={totalChecked}
                                 indeterminate={totalIndeterminate}
-                                onChange={() => {
-                                    setSelectedItemIndexList(totalChecked ? [] : cartItemList.map((_, index) => index));
-                                }}
+                                onChange={handleTotalCheckboxChange}
+                                disabled={!cartItemList.length}
                             />
                         </TableCell>
                         { columns.map(column =>
@@ -66,19 +88,14 @@ const CartPage = () => {
                     <TableBody>
                         { cartItemList
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((cartItem , index)=> {
+                            .map((cartItem ) => {
                             return <TableRow>
                                 <TableCell padding="checkbox">
                                     <Checkbox
-                                        checked={selectedItemIndexList.some(i => i === index)}
-                                        onChange={(_,selected) => {
-                                            if (selected) {
-                                                setSelectedItemIndexList([...selectedItemIndexList, index]);
-                                            }
-                                            else {
-                                                setSelectedItemIndexList(selectedItemIndexList.filter(i => i !== index));
-                                            }
-                                    }}
+                                        checked={cartItem.selected}
+                                        onChange={(_, selected) => {
+                                            handleItemCheckboxChange(cartItem.id, selected);
+                                        }}
                                     />
                                 </TableCell>
                                 <TableCell align="left">
@@ -92,8 +109,7 @@ const CartPage = () => {
                                 </TableCell>
                                 <TableCell align="left">
                                     <Button onClick={async () => {
-                                        setCartItemList(cartItemList.filter(ci => ci.id !== cartItem.id));
-                                        await deleteCartItem(cartItem.id);
+                                        await handleCartItemDelete(cartItem.id);
                                     }}>删除</Button>
                                 </TableCell>
                             </TableRow>;
@@ -113,15 +129,17 @@ const CartPage = () => {
                 onRowsPerPageChange={(event) => {
                     setRowsPerPage(event.target.value);
                     setPage(0);
-                    setSelectedItemIndexList([]);
+                    setCartItemList(cartItemList.map(cartItem => {
+                        return {...cartItem, selected: false};
+                    }));
                 }}
             />
-            <div>{`总价：${
-                selectedItemIndexList
-                    .map(index => cartItemList[index].book.price)
-                    .reduce((partialSum, a) => partialSum + a, 0) / 100}元`
+            <div>{`总价：${cartItemList
+                .filter(cartItem => cartItem.selected)
+                .map(cartItem => cartItem.book.price)
+                .reduce((accumulator, currentValue) => accumulator + currentValue, 0) / 100}元`
             }</div>
-            <Button>立即下单</Button>
+            <Button disabled={!selectedCartItemCount}>立即下单</Button>
         </PrivateLayout>);
 }
 export default CartPage;
