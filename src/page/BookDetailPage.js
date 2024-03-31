@@ -1,7 +1,7 @@
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {getBook} from "../service/book";
-import {Box, Button, Card, CardMedia, Divider, Tab, Toolbar} from "@mui/material";
+import {Box, Button, Divider} from "@mui/material";
 import PriceBox from "../components/PriceBox";
 import CommentArea from "../components/CommentArea";
 import {PrivateLayout} from "../components/Layout";

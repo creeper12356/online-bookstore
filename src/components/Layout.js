@@ -27,7 +27,7 @@ export function PrivateLayout ({children}){
 
     useEffect(() => {
         checkLogin();
-    }, []);
+    });
     return (
         <>
             <Navigator />

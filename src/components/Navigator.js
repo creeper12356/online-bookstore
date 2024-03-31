@@ -1,7 +1,4 @@
-import {AppBar, Badge, Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import {AppBar,  Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {useState} from "react";
 

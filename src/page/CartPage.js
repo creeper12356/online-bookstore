@@ -6,6 +6,7 @@ import * as React from 'react';
 import {
     Button,
     Checkbox,
+    Link,
     Table,
     TableBody,
     TableCell,
@@ -99,7 +100,12 @@ const CartPage = () => {
                                     />
                                 </TableCell>
                                 <TableCell align="left">
-                                    { cartItem.book.title}
+                                    <Link
+                                        href={`/book/${cartItem.book.id}`}
+                                        style={{textDecoration: 'none'}}
+                                    >
+                                        { cartItem.book.title}
+                                    </Link>
                                 </TableCell>
                                 <TableCell align="left">
                                     {cartItem.number}

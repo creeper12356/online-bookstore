@@ -5,6 +5,7 @@ export async function getCartItems (){
     let result;
     try {
         result = await get(url);
+        console.log(result);
     } catch (error) {
         console.log(error);
         result = {ok: false, message: 'network error'};
