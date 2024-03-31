@@ -1,9 +1,10 @@
 import {AppBar,  Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import {useState} from "react";
+import {useContext} from "react";
+import {NavigatorIndexContext} from "../lib/Context";
 
 const Navigator = () => {
-    const [menuIndex, setMenuIndex] = useState(0);
+    const navigatorIndex = useContext(NavigatorIndexContext);
     return (
         <AppBar
             position="fixed"
@@ -25,7 +26,7 @@ const Navigator = () => {
                     </Link>
 
                 </Box>
-                <Tabs value={menuIndex} onChange={(e, index) => {setMenuIndex(index); }}>
+                <Tabs value={navigatorIndex}>
                     <Tab label="首页" href="/"/>
                     <Tab label="购物车" href="/cart" />
                     <Tab label="订单" />

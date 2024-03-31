@@ -15,6 +15,7 @@ import {
     TablePagination,
     TableRow
 } from "@mui/material";
+import {NavigatorIndexContext} from "../lib/Context";
 
 const columns = [
     '书名',
@@ -66,86 +67,88 @@ const CartPage = () => {
     };
 
     return (
-        <PrivateLayout>
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableCell padding="checkbox">
-                            <Checkbox
-                                checked={totalChecked}
-                                indeterminate={totalIndeterminate}
-                                onChange={handleTotalCheckboxChange}
-                                disabled={!cartItemList.length}
-                            />
-                        </TableCell>
-                        { columns.map(column =>
-                            <TableCell
-                                key={column.id}
-                                align="left"
-                            >
-                                {column}
-                            </TableCell>)}
-                    </TableHead>
-                    <TableBody>
-                        { cartItemList
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((cartItem ) => {
-                            return <TableRow>
-                                <TableCell padding="checkbox">
-                                    <Checkbox
-                                        checked={cartItem.selected}
-                                        onChange={(_, selected) => {
-                                            handleItemCheckboxChange(cartItem.id, selected);
-                                        }}
-                                    />
-                                </TableCell>
-                                <TableCell align="left">
-                                    <Link
-                                        href={`/book/${cartItem.book.id}`}
-                                        style={{textDecoration: 'none'}}
-                                    >
-                                        { cartItem.book.title}
-                                    </Link>
-                                </TableCell>
-                                <TableCell align="left">
-                                    {cartItem.number}
-                                </TableCell>
-                                <TableCell align="left">
-                                    {cartItem.book.price / 100}
-                                </TableCell>
-                                <TableCell align="left">
-                                    <Button onClick={async () => {
-                                        await handleCartItemDelete(cartItem.id);
-                                    }}>删除</Button>
-                                </TableCell>
-                            </TableRow>;
-                        })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[2, 10, 20, 50, 100]}
-                component="div"
-                count={cartItemList.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => {
-                    setPage(newPage);
-                }}
-                onRowsPerPageChange={(event) => {
-                    setRowsPerPage(event.target.value);
-                    setPage(0);
-                    setCartItemList(cartItemList.map(cartItem => {
-                        return {...cartItem, selected: false};
-                    }));
-                }}
-            />
-            <div>{`总价：${cartItemList
-                .filter(cartItem => cartItem.selected)
-                .map(cartItem => cartItem.book.price)
-                .reduce((accumulator, currentValue) => accumulator + currentValue, 0) / 100}元`
-            }</div>
-            <Button disabled={!selectedCartItemCount}>立即下单</Button>
-        </PrivateLayout>);
+        <NavigatorIndexContext.Provider value={1} >
+            <PrivateLayout>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableCell padding="checkbox">
+                                <Checkbox
+                                    checked={totalChecked}
+                                    indeterminate={totalIndeterminate}
+                                    onChange={handleTotalCheckboxChange}
+                                    disabled={!cartItemList.length}
+                                />
+                            </TableCell>
+                            { columns.map(column =>
+                                <TableCell
+                                    key={column.id}
+                                    align="left"
+                                >
+                                    {column}
+                                </TableCell>)}
+                        </TableHead>
+                        <TableBody>
+                            { cartItemList
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((cartItem ) => {
+                                    return <TableRow>
+                                        <TableCell padding="checkbox">
+                                            <Checkbox
+                                                checked={cartItem.selected}
+                                                onChange={(_, selected) => {
+                                                    handleItemCheckboxChange(cartItem.id, selected);
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            <Link
+                                                href={`/book/${cartItem.book.id}`}
+                                                style={{textDecoration: 'none'}}
+                                            >
+                                                { cartItem.book.title}
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {cartItem.number}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {cartItem.book.price / 100}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            <Button onClick={async () => {
+                                                await handleCartItemDelete(cartItem.id);
+                                            }}>删除</Button>
+                                        </TableCell>
+                                    </TableRow>;
+                                })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[2, 10, 20, 50, 100]}
+                    component="div"
+                    count={cartItemList.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={(_, newPage) => {
+                        setPage(newPage);
+                    }}
+                    onRowsPerPageChange={(event) => {
+                        setRowsPerPage(event.target.value);
+                        setPage(0);
+                        setCartItemList(cartItemList.map(cartItem => {
+                            return {...cartItem, selected: false};
+                        }));
+                    }}
+                />
+                <div>{`总价：${cartItemList
+                    .filter(cartItem => cartItem.selected)
+                    .map(cartItem => cartItem.book.price)
+                    .reduce((accumulator, currentValue) => accumulator + currentValue, 0) / 100}元`
+                }</div>
+                <Button disabled={!selectedCartItemCount}>立即下单</Button>
+            </PrivateLayout>
+        </NavigatorIndexContext.Provider>);
 }
 export default CartPage;
