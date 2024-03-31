@@ -21,3 +21,12 @@ export async function post(url, data) {
     let res = await fetch(url, opts);
     return res.json();
 }
+
+export async function del(url) {
+    let opts = {
+        method: 'DELETE',
+        credentials: 'include'
+    }
+    let res = await fetch(url, opts);
+    return res;
+}

@@ -29,8 +29,8 @@ const Navigator = () => {
 
                 </Box>
                 <Tabs value={menuIndex} onChange={(e, index) => {setMenuIndex(index); }}>
-                    <Tab label="首页"/>
-                    <Tab label="购物车" />
+                    <Tab label="首页" href="/"/>
+                    <Tab label="购物车" href="/cart" />
                     <Tab label="订单" />
                     <Tab label="排行" />
                 </Tabs>

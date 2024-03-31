@@ -1,6 +1,6 @@
 import {PrivateLayout} from "../components/Layout";
 import {useEffect, useState} from "react";
-import { getCartItems} from "../service/cart";
+import {deleteCartItem, getCartItems} from "../service/cart";
 import '../css/CartPage.css'
 import * as React from 'react';
 import {
@@ -30,9 +30,17 @@ const CartPage = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(20);
     const [selectedItemIndexList, setSelectedItemIndexList] = useState([]);
+    const [totalChecked, setTotalChecked] = useState(false);
+    const [totalIndeterminate, setTotalIndeterminate] = useState(false);
+
+
     useEffect(() => {
         getCartItemList();
     }, []);
+    useEffect(() => {
+        setTotalChecked(selectedItemIndexList.length === cartItemList.length);
+        setTotalIndeterminate(selectedItemIndexList.length && selectedItemIndexList.length !== cartItemList.length);
+    }, [cartItemList, selectedItemIndexList]);
     return (
         <PrivateLayout>
             <TableContainer>
@@ -40,9 +48,11 @@ const CartPage = () => {
                     <TableHead>
                         <TableCell padding="checkbox">
                             <Checkbox
-                                checked={selectedItemIndexList.length === cartItemList.length}
-                                indeterminate={
-                                selectedItemIndexList.length && selectedItemIndexList.length !== cartItemList.length}
+                                checked={totalChecked}
+                                indeterminate={totalIndeterminate}
+                                onChange={() => {
+                                    setSelectedItemIndexList(totalChecked ? [] : cartItemList.map((_, index) => index));
+                                }}
                             />
                         </TableCell>
                         { columns.map(column =>
@@ -81,7 +91,10 @@ const CartPage = () => {
                                     {cartItem.book.price / 100}
                                 </TableCell>
                                 <TableCell align="left">
-                                    <Button>购买</Button>
+                                    <Button onClick={async () => {
+                                        setCartItemList(cartItemList.filter(ci => ci.id !== cartItem.id));
+                                        await deleteCartItem(cartItem.id);
+                                    }}>删除</Button>
                                 </TableCell>
                             </TableRow>;
                         })}
