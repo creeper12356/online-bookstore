@@ -1,4 +1,4 @@
-import {Avatar, Button, Link} from "@mui/material";
+import {Avatar, Button, Divider, Link, TextField} from "@mui/material";
 import ValueCounter from "./ValueCounter";
 
 const UserProfile = ({user}) => {
@@ -10,17 +10,25 @@ const UserProfile = ({user}) => {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            marginLeft: 20,
+            marginLeft: '80px',
             flexGrow: 1,
             gap: 20,
         }}>
             <div style={{font: '60px bold'}}>{user.nickname}</div>
             <Link>creeperhjt@sjtu.edu.cn</Link>
+            <TextField
+                variant="outlined"
+                contentEditable={false}
+                fullWidth
+                value={'Better late than never.'}
+            />
+            <Divider style={{marginTop: '20px'}}/>
             <div style={{
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 width: '70%',
+                marginTop: '10px',
             }}>
                 <ValueCounter value={1} label="关注"/>
                 <ValueCounter value={0} label="粉丝"/>

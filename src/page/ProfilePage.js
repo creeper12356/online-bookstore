@@ -6,6 +6,7 @@ import {NavigatorIndexContext} from "../lib/Context";
 import UserProfile from "../components/UserProfile";
 
 import '../css/ProfilePage.css';
+import {logout} from "../service/logout";
 
 const ProfilePage = () => {
     const [user, setUser] = useState({});
@@ -24,6 +25,10 @@ const ProfilePage = () => {
                     <Button
                         variant="outlined"
                         style={{alignSelf: 'flex-end'}}
+                        href="/login"
+                        onClick={async () => {
+                            await logout();
+                        }}
                     >
                         登出
                     </Button>

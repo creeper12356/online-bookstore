@@ -21,6 +21,18 @@ export async function post(url, data) {
     let res = await fetch(url, opts);
     return res.json();
 }
+export async function put(url, data) {
+    let opts = {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    }
+    let res = await fetch(url, opts);
+    return res.json();
+}
 
 export async function del(url) {
     let opts = {
