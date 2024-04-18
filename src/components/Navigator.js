@@ -36,6 +36,7 @@ const Navigator = () => {
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                     <IconButton
                         size="large"
+                        href="/profile"
                     >
                         <AccountCircleIcon />
                     </IconButton>

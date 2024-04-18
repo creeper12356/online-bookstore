@@ -4,6 +4,7 @@ import {BrowserRouter} from "react-router-dom";
 import LoginPage from "../page/LoginPage";
 import BookDetailPage from "../page/BookDetailPage";
 import CartPage from "../page/CartPage";
+import ProfilePage from "../page/ProfilePage";
 
 const AppRouter = () => {
     return (
@@ -25,6 +26,10 @@ const AppRouter = () => {
                 <Route
                     path="/login"
                     element={<LoginPage />}
+                />
+                <Route
+                    path="/profile"
+                    element={<ProfilePage />}
                 />
             </Routes>
         </BrowserRouter>
