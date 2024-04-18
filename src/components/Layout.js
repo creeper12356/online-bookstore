@@ -30,7 +30,7 @@ export function PrivateLayout ({children}){
     });
     return (
         <>
-            <Navigator/>
+            <Navigator />
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
                 {children}
