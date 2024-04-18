@@ -1,5 +1,5 @@
 import {
-    ImageList, ImageListItem
+    ImageList, ImageListItem, Pagination
 } from "@mui/material";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
@@ -23,9 +23,10 @@ const HomePage = () => {
             <PrivateLayout>
                 <SearchBar />
                 <ImageList
-                    cols={4}
+                    cols={5}
                 >
-                    {bookList.map(book => (
+                    {
+                        bookList.map(book => (
                         <ImageListItem key={book.id}>
                             <BookCard
                                 img={book.cover}
@@ -34,9 +35,10 @@ const HomePage = () => {
                                 price={book.price}
                                 href={`/book/${book.id}`}
                             />
-                        </ImageListItem>
-                    ))}
+                        </ImageListItem> ))
+                    }
                 </ImageList>
+                <Pagination count={2}/>
             </PrivateLayout>
         </NavigatorIndexContext.Provider>
     );

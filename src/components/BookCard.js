@@ -14,7 +14,7 @@ const BookCard = ({ img, title, price, alt, href}) => {
                     alt={alt}
                 />
                 <CardContent className="book-card-title">
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h6">
                         {title}
                     </Typography>
                 </CardContent>

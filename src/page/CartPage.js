@@ -116,9 +116,13 @@ const CartPage = () => {
                                             {cartItem.book.price / 100}
                                         </TableCell>
                                         <TableCell align="left">
-                                            <Button onClick={async () => {
-                                                await handleCartItemDelete(cartItem.id);
-                                            }}>删除</Button>
+                                            <Button
+                                                variant="outlined"
+                                                onClick={async () => {
+                                                    await handleCartItemDelete(cartItem.id);
+                                            }}>
+                                                删除
+                                            </Button>
                                         </TableCell>
                                     </TableRow>;
                                 })}
@@ -147,7 +151,7 @@ const CartPage = () => {
                     .map(cartItem => cartItem.book.price)
                     .reduce((accumulator, currentValue) => accumulator + currentValue, 0) / 100}元`
                 }</div>
-                <Button disabled={!selectedCartItemCount}>立即下单</Button>
+                <Button variant="outlined" disabled={!selectedCartItemCount}>立即下单</Button>
             </PrivateLayout>
         </NavigatorIndexContext.Provider>);
 }
