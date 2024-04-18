@@ -15,12 +15,6 @@ export async function getBooks(keyword, pageIndex, pageSize){
 export async function getBook(id) {
     let url = `${PREFIX}/book/${id}`;
     let result;
-    try {
-        result = await get(url);
-    }
-    catch (error) {
-        console.log(error);
-        result = {ok: false, message: 'network error'};
-    }
+    result = await get(url);
     return result;
 }

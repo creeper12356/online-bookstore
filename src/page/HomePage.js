@@ -10,10 +10,10 @@ import {NavigatorIndexContext} from "../lib/Context";
 
 const HomePage = () => {
     const [bookList, setBookList] = useState([]);
-    const getBookList = async () => {
-        let result = await getBooks('', 0, 10);
-        console.log(result);
-        setBookList(result.items);
+    const getBookList = () => {
+        getBooks('', 0, 10)
+            .then(result => {setBookList(result.items);})
+            .catch(e => { console.log(e); });
     }
     useEffect(() => {
         getBookList();

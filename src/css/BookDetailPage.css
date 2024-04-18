@@ -9,7 +9,7 @@
     margin: 10px 0;
 }
 .book-detail-button {
-
+    margin: 10px!important;
 }
 .price-box-container {
     background-color: rgb(252, 250, 247);

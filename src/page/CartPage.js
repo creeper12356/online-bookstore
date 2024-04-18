@@ -2,7 +2,7 @@ import {PrivateLayout} from "../components/Layout";
 import {useEffect, useState} from "react";
 import {deleteCartItem, getCartItems} from "../service/cart";
 import '../css/CartPage.css'
-import * as React from 'react';
+import React from "react";
 import {
     Button,
     Checkbox,
@@ -27,11 +27,10 @@ const columns = [
 const CartPage = () => {
     const [cartItemList, setCartItemList] = useState([]);
     const [selectedCartItemCount, setSelectedCartItemCount] = useState(0);
-    const getCartItemList = async () => {
-        let res = await getCartItems();
-        setCartItemList(res.map(cartItem => {
-            return {...cartItem, selected: false} ;
-        }));
+    const getCartItemList = () => {
+        getCartItems()
+            .then(res => {setCartItemList(res.map(cartItem => {return {...cartItem, selected: false};}) ); })
+            .catch(e => {console.log(e); });
     };
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(20);

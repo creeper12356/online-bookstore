@@ -9,10 +9,10 @@ import {PrivateLayout} from "../components/Layout";
 const BookDetailPage = () => {
     const {id} = useParams();
     const [bookDetail, setBookDetail] = useState({});
-    const getBookDetail = async (id) => {
-        let result = await getBook(id);
-        console.log(result);
-        setBookDetail(result);
+    const getBookDetail = (id) => {
+        getBook(id)
+            .then(result => { setBookDetail(result);})
+            .catch(e => { console.log(e); });
     };
 
     useEffect(() => {
@@ -42,11 +42,13 @@ const BookDetailPage = () => {
                         alignItems: 'center'
                     }}>
                         <Button
+                            variant="outlined"
                             className="book-detail-button"
                         >
                             加入购物车
                         </Button>
                         <Button
+                            variant="outlined"
                             className="book-detail-button"
                         >
                             购买
