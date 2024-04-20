@@ -27,15 +27,15 @@ const HomePage = () => {
                 >
                     {
                         bookList.map(book => (
-                        <ImageListItem key={book.id}>
-                            <BookCard
-                                img={book.cover}
-                                title={book.title}
-                                alt={book.alt}
-                                price={book.price}
-                                href={`/book/${book.id}`}
-                            />
-                        </ImageListItem> ))
+                            <ImageListItem key={book.id}>
+                                <BookCard
+                                    img={book.cover}
+                                    title={book.title}
+                                    alt={book.alt}
+                                    price={book.price}
+                                    href={`/book/${book.id}`}
+                                />
+                            </ImageListItem> ))
                     }
                 </ImageList>
                 <Pagination count={2}/>

@@ -5,12 +5,15 @@ import LoginForm from "../components/LoginForm";
 const LoginPage = () => {
     return (
             <BasicLayout>
-                <LoginForm
-                    title="Book Store"
-                    userLabel="账号"
-                    passwordLabel="密码"
-                    loginButtonText="登录"
-                />
+                <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center' , flexGrow: 1}}>
+                    <LoginForm
+                        title="Book Store"
+                        userLabel="账号"
+                        passwordLabel="密码"
+                        loginButtonText="登录"
+                    />
+                </div>
+
             </BasicLayout>
     );
 };

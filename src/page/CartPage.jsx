@@ -42,12 +42,15 @@ const CartPage = () => {
                     }}
                 />
                 <div>{`总价：${totalPrice}元`}</div>
-                <Button
-                    variant="outlined"
-                    disabled={buyButtonDisabled}
-                >
-                    立即下单
-                </Button>
+                <div>
+                    <Button
+                        fullWidth={false}
+                        variant="outlined"
+                        disabled={buyButtonDisabled}
+                    >
+                        立即下单
+                    </Button>
+                </div>
             </PrivateLayout>
         </NavigatorIndexContext.Provider>);
 }

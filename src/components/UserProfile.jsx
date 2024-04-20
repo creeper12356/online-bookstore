@@ -6,11 +6,12 @@ const UserProfile = ({user}) => {
         display: 'flex',
         flexDirection: 'row',
     }}>
-        <Avatar sx={{width: 150, height: 150}}/>
+        <Avatar src="/creeper.png" sx={{width: 150, height: 150}}/>
         <div style={{
             display: 'flex',
             flexDirection: 'column',
             marginLeft: '80px',
+            marginRight: '80px',
             flexGrow: 1,
             gap: 20,
         }}>

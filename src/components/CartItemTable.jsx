@@ -52,7 +52,6 @@ const CartItemTable = ({ cartItemList, onCartItemDelete, onSelectedCartItemListC
                 cartItemWrapper));
     };
 
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(20);
     const [totalChecked, setTotalChecked] = useState(false);

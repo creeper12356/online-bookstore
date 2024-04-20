@@ -1,5 +1,4 @@
-import {AppBar,  Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {AppBar, Avatar, Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} from "@mui/material";
 import {useContext} from "react";
 import {NavigatorIndexContext} from "../lib/Context";
 
@@ -34,11 +33,8 @@ const Navigator = () => {
                 </Tabs>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton
-                        size="large"
-                        href="/profile"
-                    >
-                        <AccountCircleIcon />
+                    <IconButton href="/profile">
+                        <Avatar src="/creeper.png" />
                     </IconButton>
                 </Box>
             </Toolbar>

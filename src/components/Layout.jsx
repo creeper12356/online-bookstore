@@ -6,13 +6,13 @@ import {useEffect} from "react";
 
 export function BasicLayout ({children}){
     return (
-        <>
+        <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
             <Navigator />
-            <Box component="main" sx={{flexGrow: 1, p: 3}}>
+            <Box component="main" sx={{flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column'}}>
                 <Toolbar/>
                 {children}
             </Box>
-        </>
+        </div>
     );
 };
 
@@ -28,13 +28,5 @@ export function PrivateLayout ({children}){
     useEffect(() => {
         checkLogin();
     });
-    return (
-        <>
-            <Navigator />
-            <Box component="main" sx={{flexGrow: 1, p: 3}}>
-                <Toolbar/>
-                {children}
-            </Box>
-        </>
-    );
+    return <BasicLayout children={children} />;
 }
