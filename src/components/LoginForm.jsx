@@ -1,19 +1,28 @@
 import {Avatar, Button, Checkbox, Container, FormControlLabel, Link, Paper, TextField, Typography} from "@mui/material";
 import {useState} from "react";
-import {useNavigate} from "react-router";
 import {login} from "../service/login";
 
-const LoginForm = ({title, userLabel, passwordLabel, loginButtonText}) => {
+const LoginForm = (
+    {
+        title, 
+        userLabel, 
+        passwordLabel, 
+        loginButtonText,
+        onLoginOk,
+        onLoginError
+    } ) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isRememberMe, setRememberMe] = useState(false);
-    const navigate = useNavigate();
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        let result = await login(username, password);
-        if(result.ok) {
-            navigate('/');
-        }
+        login(username, password)
+            .then(result => {
+                onLoginOk?.();
+            })
+            .catch(result => {
+                onLoginError?.(result.message);
+            });
     };
     return (
         <Container className="login-page-container">
