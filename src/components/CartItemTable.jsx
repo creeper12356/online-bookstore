@@ -61,7 +61,7 @@ const CartItemTable = ({
     const [rowsPerPage, setRowsPerPage] = useState(20);
     const [totalChecked, setTotalChecked] = useState(false);
     const [totalIndeterminate, setTotalIndeterminate] = useState(false);
-
+    
     return (
         <>
             <TableContainer>
