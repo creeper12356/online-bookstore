@@ -5,6 +5,7 @@ import LoginPage from "../page/LoginPage";
 import BookDetailPage from "../page/BookDetailPage";
 import CartPage from "../page/CartPage";
 import ProfilePage from "../page/ProfilePage";
+import OrderPage from "../page/OrderPage";
 
 const AppRouter = () => {
     return (
@@ -22,6 +23,10 @@ const AppRouter = () => {
                 <Route
                     path="/cart"
                     element={<CartPage />}
+                />
+                <Route
+                    path="/order"
+                    element={<OrderPage />}
                 />
                 <Route
                     path="/login"

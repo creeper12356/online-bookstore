@@ -28,7 +28,7 @@ const Navigator = () => {
                 <Tabs value={navigatorIndex}>
                     <Tab label="首页" href="/"/>
                     <Tab label="购物车" href="/cart" />
-                    <Tab label="订单" />
+                    <Tab label="订单" href="/order"/>
                     <Tab label="排行" />
                 </Tabs>
                 <Box sx={{ flexGrow: 1 }} />

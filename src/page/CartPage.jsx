@@ -9,10 +9,12 @@ import {
 import {NavigatorIndexContext} from "../lib/Context";
 import CartItemTable from "../components/CartItemTable";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { addOrder } from "../service/order";
 
 
 const CartPage = () => {
     const [cartItemList, setCartItemList] = useState([]);
+    const [selectedCartItemList, setSelectedCartItemList] = useState([]);
     const [buyButtonDisabled, setBuyButtonDisabled] = useState(true);
     const [totalPrice, setTotalPrice] = useState(0);
     const [messageError, ErrorSnackbar] = useErrorHandler();
@@ -54,6 +56,7 @@ const CartPage = () => {
                     onCartItemNumberChanged={handleCartItemNumberChanged}
                     onSelectedCartItemListChanged={(selectedCartItemList) => {
                         setBuyButtonDisabled(selectedCartItemList.length === 0);
+                        setSelectedCartItemList(selectedCartItemList);
                         setTotalPrice(selectedCartItemList
                             .map(cartItem => cartItem.price  * cartItem.number)
                             .reduce((accumulator, currentValue) => accumulator + currentValue, 0) / 100);
@@ -65,6 +68,28 @@ const CartPage = () => {
                         fullWidth={false}
                         variant="outlined"
                         disabled={buyButtonDisabled}
+                        onClick={() => {
+                            console.log('buy');
+                            addOrder(
+                                {
+                                    orderItems: selectedCartItemList.map(
+                                        cartItem => ({bookId: cartItem.bookId, number: cartItem.number})
+                                    ), 
+                                    receiver: 'receiver', 
+                                    address: 'address', 
+                                    tel: 'tel'
+                                }
+                            ).then(() => {
+                                selectedCartItemList.forEach(cartItem => {
+                                    deleteCartItem(cartItem.id).catch(e => {
+                                        messageError(e.message);
+                                    });
+                                });
+                                setCartItemList(cartItemList.filter(cartItem => !selectedCartItemList.includes(cartItem)));
+                            }).catch(e => {
+                                messageError(e.message);
+                            });
+                        }}
                     >
                         立即下单
                     </Button>
