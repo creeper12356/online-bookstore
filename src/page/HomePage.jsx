@@ -12,7 +12,7 @@ const HomePage = () => {
     const [bookList, setBookList] = useState([]);
     const getBookList = () => {
         getBooks('', 0, 10)
-            .then(result => {setBookList(result.items);})
+            .then(result => {setBookList(result.books);})
             .catch(e => { console.log(e); });
     }
     useEffect(() => {

@@ -6,15 +6,24 @@ import PriceBox from "../components/PriceBox";
 import CommentArea from "../components/CommentArea";
 import {PrivateLayout} from "../components/Layout";
 import {NavigatorIndexContext} from "../lib/Context";
+import { addCartItem } from "../service/cart";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 
 const BookDetailPage = () => {
     const {id} = useParams();
     const [bookDetail, setBookDetail] = useState({});
+    const [messageError, ErrorSnackbar] = useErrorHandler();
+
     const getBookDetail = (id) => {
         getBook(id)
             .then(result => { setBookDetail(result);})
             .catch(e => { console.log(e); });
     };
+    const onAddToCartClicked = async () => {
+        addCartItem(id).catch(e => {
+            messageError(e.message);
+        });
+    }
 
     useEffect(() => {
         getBookDetail(id);
@@ -46,6 +55,7 @@ const BookDetailPage = () => {
                             <Button
                                 variant="outlined"
                                 className="book-detail-button"
+                                onClick={onAddToCartClicked}
                             >
                                 加入购物车
                             </Button>
@@ -59,6 +69,7 @@ const BookDetailPage = () => {
                     </Box>
                 </Box>
                 <CommentArea />
+                <ErrorSnackbar />
             </PrivateLayout>
         </NavigatorIndexContext.Provider>
 

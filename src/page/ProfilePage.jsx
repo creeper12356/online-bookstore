@@ -35,7 +35,7 @@ const ProfilePage = () => {
                     <UserProfile user={user} />
                 </div>
             </PrivateLayout>
-        </NavigatorIndexContext.Provider>
+          </NavigatorIndexContext.Provider>
     );
 }
 export default ProfilePage;

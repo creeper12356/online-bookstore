@@ -1,6 +1,6 @@
 import {PrivateLayout} from "../components/Layout";
 import {useEffect, useState} from "react";
-import {deleteCartItem, getCartItems} from "../service/cart";
+import {deleteCartItem, getCartItems, updateCartItem} from "../service/cart";
 import '../css/CartPage.css'
 import React from "react";
 import {
@@ -8,23 +8,40 @@ import {
 } from "@mui/material";
 import {NavigatorIndexContext} from "../lib/Context";
 import CartItemTable from "../components/CartItemTable";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 
 
 const CartPage = () => {
     const [cartItemList, setCartItemList] = useState([]);
     const [buyButtonDisabled, setBuyButtonDisabled] = useState(true);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [messageError, ErrorSnackbar] = useErrorHandler();
 
     useEffect(() => {
         getCartItemList();
     }, []);
     const handleCartItemDelete = async (id) => {
         setCartItemList(cartItemList.filter(cartItem => cartItem.id !== id));
-        await deleteCartItem(id);
+        deleteCartItem(id).catch(e => {
+            messageError(e.message);
+        });
     };
+    const handleCartItemNumberChanged = async (id, number) => {
+        setCartItemList(
+            cartItemList
+                .map(
+                    cartItem => cartItem.id === id ? 
+                    {...cartItem, number: number} :
+                    cartItem
+                )
+        );
+        updateCartItem(id, number).catch(e => {
+            messageError(e.message);
+        });
+    }
     const getCartItemList = () => {
         getCartItems()
-            .then(res => {setCartItemList(res); })
+            .then(res => {setCartItemList(res.items); })
             .catch(e => { console.log(e); });
     };
 
@@ -34,10 +51,11 @@ const CartPage = () => {
                 <CartItemTable
                     cartItemList={cartItemList}
                     onCartItemDelete={handleCartItemDelete}
+                    onCartItemNumberChanged={handleCartItemNumberChanged}
                     onSelectedCartItemListChanged={(selectedCartItemList) => {
                         setBuyButtonDisabled(selectedCartItemList.length === 0);
                         setTotalPrice(selectedCartItemList
-                            .map(cartItem => cartItem.book.price)
+                            .map(cartItem => cartItem.price  * cartItem.number)
                             .reduce((accumulator, currentValue) => accumulator + currentValue, 0) / 100);
                     }}
                 />
@@ -51,6 +69,7 @@ const CartPage = () => {
                         立即下单
                     </Button>
                 </div>
+                <ErrorSnackbar />
             </PrivateLayout>
         </NavigatorIndexContext.Provider>);
 }

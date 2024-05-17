@@ -19,12 +19,12 @@ export function BasicLayout ({children}){
 export function PrivateLayout ({children}){
     const navigate = useNavigate();
     const checkLogin = async () => {
-        let result = await getMe();
-        if(!result) {
+        try {
+            await getMe();
+        } catch(e) {
             navigate('/login');
         }
     };
-
     useEffect(() => {
         checkLogin();
     });

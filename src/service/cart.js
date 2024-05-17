@@ -1,21 +1,18 @@
-import {del, get, PREFIX} from "./common";
+import {delJsonOrThrow,  getJsonOrThrow, postJsonOrThrow, PREFIX, putJsonOrThrow} from "./common";
 
 export async function getCartItems (){
     let url = `${PREFIX}/cart`;
-    let result;
-    result = await get(url);
-    return result;
+    return await getJsonOrThrow(url);
 }
-
+export async function addCartItem(bookId, number) {
+    let url = `${PREFIX}/cart`;
+    return await postJsonOrThrow(url, {bookId, number});
+}
+export async function updateCartItem(id, number) {
+    let url = `${PREFIX}/cart/${id}`;
+    return await putJsonOrThrow(url, {number});
+}
 export async function deleteCartItem(id) {
     let url = `${PREFIX}/cart/${id}`;
-    let result;
-    try {
-        result = await del(url);
-        console.log(result);
-    } catch (error) {
-        console.log(error);
-        result = {ok: false, message: 'network error'};
-    }
-    return result;
+    return await delJsonOrThrow(url);
 }

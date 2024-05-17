@@ -1,20 +1,10 @@
-import {get, PREFIX} from "./common";
+import { getJsonOrThrow, PREFIX} from "./common";
 
-export async function getBooks(keyword, pageIndex, pageSize){
-    let url = `${PREFIX}/books?keyword=${keyword}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
-    let result;
-    try {
-        result = await get(url);
-    }
-    catch( error ) {
-        console.log(error);
-        result = {ok: false, message: 'network error'};
-    }
-    return result;
+export async function getBooks(q, page, pagesize){
+    let url = `${PREFIX}/books?q=${q}&page=${page}&pagesize=${pagesize}`;
+    return await getJsonOrThrow(url);
 }
 export async function getBook(id) {
-    let url = `${PREFIX}/book/${id}`;
-    let result;
-    result = await get(url);
-    return result;
+    let url = `${PREFIX}/books/${id}`;
+    return await getJsonOrThrow(url);
 }

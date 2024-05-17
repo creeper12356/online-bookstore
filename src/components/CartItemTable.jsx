@@ -8,11 +8,16 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow
+    TableRow,
+    TextField
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 
-const CartItemTable = ({ cartItemList, onCartItemDelete, onSelectedCartItemListChanged }) => {
+const CartItemTable = ({ 
+    cartItemList, 
+    onCartItemDelete,
+    onCartItemNumberChanged,
+    onSelectedCartItemListChanged}) => {
     const columns = [
         '书名',
         '数量',
@@ -56,6 +61,7 @@ const CartItemTable = ({ cartItemList, onCartItemDelete, onSelectedCartItemListC
     const [rowsPerPage, setRowsPerPage] = useState(20);
     const [totalChecked, setTotalChecked] = useState(false);
     const [totalIndeterminate, setTotalIndeterminate] = useState(false);
+
     return (
         <>
             <TableContainer>
@@ -92,17 +98,25 @@ const CartItemTable = ({ cartItemList, onCartItemDelete, onSelectedCartItemListC
                                   </TableCell>
                                   <TableCell align="left">
                                       <Link
-                                          href={`/book/${cartItemWrapper.cartItem.book.id}`}
+                                          href={`/book/${cartItemWrapper.cartItem.bookId}`}
                                           style={{textDecoration: 'none'}}
                                       >
-                                          { cartItemWrapper.cartItem.book.title}
+                                          { cartItemWrapper.cartItem.title}
                                       </Link>
                                   </TableCell>
                                   <TableCell align="left">
-                                      {cartItemWrapper.cartItem.number}
+                                    <TextField 
+                                        type="number"
+                                        value={cartItemWrapper.cartItem.number}
+                                        onChange={(event) => {
+                                            onCartItemNumberChanged?.(cartItemWrapper.cartItem.id, event.target.value);
+                                        }}
+                                        InputProps={{
+                                            inputProps: {min: 1, max: 100, step: 1 }
+                                        }} />
                                   </TableCell>
                                   <TableCell align="left">
-                                      {cartItemWrapper.cartItem.book.price / 100}
+                                      {cartItemWrapper.cartItem.price / 100}
                                   </TableCell>
                                   <TableCell align="left">
                                       <Button
