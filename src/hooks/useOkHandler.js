@@ -2,16 +2,16 @@ import { useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import { Slide } from '@mui/material';
 
-export function useErrorHandler() {
+export function useOkHandler() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
 
-  const messageError = (errorMsg) => {
-    setMessage(errorMsg);
+  const messageOk = (okMsg) => {
+    setMessage(okMsg);
     setOpen(true);
   };
 
-  const ErrorSnackbar = () => (
+  const OkSnackbar = () => (
     <Snackbar
       open={open}
       autoHideDuration={1000}
@@ -22,5 +22,5 @@ export function useErrorHandler() {
     />
   );
 
-  return [messageError, ErrorSnackbar];
+  return [messageOk, OkSnackbar];
 }

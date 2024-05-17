@@ -8,10 +8,12 @@ import {PrivateLayout} from "../components/Layout";
 import {NavigatorIndexContext} from "../lib/Context";
 import { addCartItem } from "../service/cart";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { useOkHandler } from "../hooks/useOkHandler";
 
 const BookDetailPage = () => {
     const {id} = useParams();
     const [bookDetail, setBookDetail] = useState({});
+    const [messageOk, OkSnackbar] = useOkHandler();
     const [messageError, ErrorSnackbar] = useErrorHandler();
 
     const getBookDetail = (id) => {
@@ -20,7 +22,9 @@ const BookDetailPage = () => {
             .catch(e => { console.log(e); });
     };
     const onAddToCartClicked = async () => {
-        addCartItem(id).catch(e => {
+        addCartItem(id).then(res => {
+            messageOk(res.message);
+        }).catch(e => {
             messageError(e.message);
         });
     }
@@ -69,6 +73,7 @@ const BookDetailPage = () => {
                     </Box>
                 </Box>
                 <CommentArea />
+                <OkSnackbar />
                 <ErrorSnackbar />
             </PrivateLayout>
         </NavigatorIndexContext.Provider>

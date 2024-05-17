@@ -15,7 +15,7 @@ const UserProfile = ({user}) => {
             flexGrow: 1,
             gap: 20,
         }}>
-            <div style={{font: '60px bold'}}>{user.nickname}</div>
+            <div style={{font: '60px bold'}}>{user.username}</div>
             <Link>creeperhjt@sjtu.edu.cn</Link>
             <TextField
                 variant="outlined"

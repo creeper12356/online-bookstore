@@ -12,7 +12,9 @@ const ProfilePage = () => {
     const [user, setUser] = useState({});
     const getUser = () => {
             getMe()
-                .then(user => { setUser(user);})
+                .then(user => {
+                    setUser(user);
+                })
                 .catch(e => {console.log(e); });
     }
     useEffect(() => {
