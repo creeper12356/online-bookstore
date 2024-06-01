@@ -41,6 +41,7 @@ const BookDetailPage = () => {
                         sx={{
                             height: 400,
                             width: 'auto',
+                            margin: 2,
                         }}
                         src={bookDetail.cover}
                     />
