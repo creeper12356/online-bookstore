@@ -16,7 +16,7 @@ const UserProfile = ({user}) => {
             gap: 20,
         }}>
             <div style={{font: '60px bold'}}>{user.username}</div>
-            <Link>creeperhjt@sjtu.edu.cn</Link>
+            <Link>{user.email}</Link>
             <TextField
                 variant="outlined"
                 contentEditable={false}

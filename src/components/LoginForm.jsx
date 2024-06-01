@@ -1,13 +1,13 @@
 import {Avatar, Button, Checkbox, Container, FormControlLabel, Link, Paper, TextField, Typography} from "@mui/material";
 import {useState} from "react";
-import {login} from "../service/login";
-
+import { login } from '../service/auth';
 const LoginForm = (
     {
         title, 
         userLabel, 
         passwordLabel, 
         loginButtonText,
+        registerUrl,
         onLoginOk,
         onLoginError
     } ) => {
@@ -18,7 +18,7 @@ const LoginForm = (
         e.preventDefault();
         login(username, password)
             .then(result => {
-                onLoginOk?.();
+                onLoginOk?.(result.message);
             })
             .catch(result => {
                 onLoginError?.(result.message);
@@ -81,7 +81,7 @@ const LoginForm = (
                         >
                             {loginButtonText ?? 'Login'}
                         </Button>
-                        <Link href="#" variant="body2">
+                        <Link href={registerUrl} variant="body2">
                             {"Don't have an account? Sign Up"}
                         </Link>
                     </form>

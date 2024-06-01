@@ -6,7 +6,7 @@ import {NavigatorIndexContext} from "../lib/Context";
 import UserProfile from "../components/UserProfile";
 
 import '../css/ProfilePage.css';
-import {logout} from "../service/logout";
+import {logout} from "../service/auth";
 
 const ProfilePage = () => {
     const [user, setUser] = useState({});

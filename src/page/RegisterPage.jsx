@@ -1,18 +1,18 @@
 import '../css/LoginPage.css';
 import {BasicLayout} from "../components/Layout";
-import LoginForm from "../components/LoginForm";
 import { useNavigate } from 'react-router';
 import { useOkHandler } from '../hooks/useOkHandler';
 import { useErrorHandler } from '../hooks/useErrorHandler';
+import RegisterForm from '../components/RegisterForm';
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
-    const handleLoginOk = (message) => {
+    const handleRegisterOk = (message) => {
         console.log(message);
-        messageOk('登录成功');
-        navigate('/');
+        messageOk('注册成功');
+        navigate('/login');
     }
-    const handleLoginError = (message) => {
+    const handleRegisterError = (message) => {
         console.log(message);
         messageError(message);
     }
@@ -21,14 +21,15 @@ const LoginPage = () => {
     return (
             <BasicLayout>
                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center' , flexGrow: 1}}>
-                    <LoginForm
+                    <RegisterForm
                         title="Book Store"
                         userLabel="账号"
                         passwordLabel="密码"
-                        loginButtonText="登录"
-                        registerUrl="/register"
-                        onLoginOk={handleLoginOk}
-                        onLoginError={handleLoginError}
+                        repeatPasswordLabel="重复密码"
+                        emailLabel="邮箱"
+                        registerButtonText="注册"
+                        onRegisterOk={handleRegisterOk}
+                        onRegisterError={handleRegisterError}
                     />
                 </div>
                 <OkSnackbar />
@@ -36,4 +37,6 @@ const LoginPage = () => {
             </BasicLayout>
     );
 };
-export default LoginPage;
+
+
+export default RegisterPage;

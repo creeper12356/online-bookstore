@@ -6,6 +6,7 @@ import BookDetailPage from "../page/BookDetailPage";
 import CartPage from "../page/CartPage";
 import ProfilePage from "../page/ProfilePage";
 import OrderPage from "../page/OrderPage";
+import RegisterPage from "../page/RegisterPage";
 
 const AppRouter = () => {
     return (
@@ -31,6 +32,10 @@ const AppRouter = () => {
                 <Route
                     path="/login"
                     element={<LoginPage />}
+                />
+                <Route
+                    path="/register"
+                    element={<RegisterPage />}
                 />
                 <Route
                     path="/profile"
