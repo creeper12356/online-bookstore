@@ -10,18 +10,33 @@ import {NavigatorIndexContext} from "../lib/Context";
 
 const HomePage = () => {
     const [bookList, setBookList] = useState([]);
-    const getBookList = () => {
-        getBooks('', 0, 10)
-            .then(result => {setBookList(result.books);})
+    const [searchArgs, setSearchArgs] = useState(
+        { query: '', page: 0, pageSize: 10 }
+    );
+    const [pageCount, setPageCount] = useState(0);
+
+    const getBookList = (q, page, pageSize) => {
+        getBooks(q, page, pageSize)
+            .then(result => {
+                setPageCount(Math.ceil(result.total / pageSize));
+                setBookList(result.books);
+            })
             .catch(e => { console.log(e); });
     }
+    const handlePageChange = (event, value) => {
+        setSearchArgs({...searchArgs, page: value - 1});
+    }
     useEffect(() => {
-        getBookList();
-    }, []);
+        getBookList(searchArgs.query, searchArgs.page, searchArgs.pageSize);
+    }, [searchArgs]);
+
+
     return (
         <NavigatorIndexContext.Provider value={0} >
             <PrivateLayout>
-                <SearchBar />
+                <SearchBar onSearch={(q) => {
+                    setSearchArgs({...searchArgs, query: q, page: 0});
+                }}/>
                 <ImageList
                     cols={5}
                 >
@@ -38,7 +53,11 @@ const HomePage = () => {
                             </ImageListItem> ))
                     }
                 </ImageList>
-                <Pagination count={2}/>
+                <Pagination
+                    count={pageCount}
+                    onChange={handlePageChange}
+                    page={searchArgs.page + 1}
+                />
             </PrivateLayout>
         </NavigatorIndexContext.Provider>
     );
