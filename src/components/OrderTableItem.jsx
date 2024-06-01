@@ -30,21 +30,21 @@ const OrderTableItem = ({ order }) => {
                 order.books.map(
                     book => (
                         <React.Fragment key={book.id}>
-                            <ListItem style={{ display: 'flex', flexDirection: 'row', gap: 5}}>
+                            <ListItem style={{ display: 'flex', flexDirection: 'row', gap: 20}}>
                                 <div>
                                     <img src={book.cover} alt={book.title} style={{width: 150}}/>
                                 </div>
-                                <div style={{display: 'flex', flexDirection: 'row', alignItems: "center", gap: 10}}>
+                                <Typography variant="h6" color="darkblue">
                                     <Link
-                                        href={`/book/${book.bookId}`}
-                                        style={{textDecoration: 'none'}}
-                                    >
-                                        { book.title }
-                                    </Link>
-                                    <Typography variant="body1" color="darkblue">{`x${book.number}`}</Typography>
-                                </div>
+                                    href={`/book/${book.bookId}`}
+                                    style={{textDecoration: 'none'}}
+                                >
+                                    { book.title }
+                                </Link>
+                                </Typography>
                                 <Box flexGrow={1} />
-                                <Typography variant="h6" color="red">{`¥${book.price / 100} `}</Typography><Typography>/本</Typography>
+                                <Typography variant="h6" color="red">{`¥${book.price / 100} `}</Typography>
+                                <Typography variant="body1" color="tomato">{`x${book.number}`}</Typography>
                             </ListItem>
                             <Divider />
                         </React.Fragment>
