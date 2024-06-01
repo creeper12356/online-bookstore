@@ -48,7 +48,7 @@ const BookDetailPage = () => {
                     <Box>
                         <h1>{bookDetail.title}</h1>
                         <Divider className="book-detail-divider-text">基本信息</Divider>
-                        <Box className="book-detail-box">{`作者：${bookDetail.author}\t销量：${bookDetail.sales}`}</Box>
+                        <Box className="book-detail-box">{`作者：${bookDetail.author}\t销量：${bookDetail.sales}\t库存：${bookDetail.stock}`}</Box>
                         <Divider className="book-detail-divider-text">作品简介</Divider>
                         <Box className="book-detail-box">{bookDetail.description}</Box>
                         <PriceBox price={bookDetail.price} />
@@ -67,6 +67,7 @@ const BookDetailPage = () => {
                             <Button
                                 variant="outlined"
                                 className="book-detail-button"
+                                disabled={bookDetail.stock === 0}
                             >
                                 购买
                             </Button>

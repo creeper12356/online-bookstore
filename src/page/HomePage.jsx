@@ -49,6 +49,7 @@ const HomePage = () => {
                                     alt={book.alt}
                                     price={book.price}
                                     href={`/book/${book.id}`}
+                                    stock={book.stock}
                                 />
                             </ImageListItem> ))
                     }
