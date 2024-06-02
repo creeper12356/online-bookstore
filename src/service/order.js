@@ -1,11 +1,13 @@
 import dayjs from "dayjs";
 import { getJsonOrThrow, postJsonOrThrow, PREFIX } from "./common";
+import utc from 'dayjs/plugin/utc';
 
+dayjs.extend(utc);
 export async function getOrders(q, from, to) {
     const params = new URLSearchParams({
         q,
-        ...(from ? { from: from.format('YYYY-MM-DD') } : {}),
-        ...(to ? { to: to.format('YYYY-MM-DD') } : {})
+        ...(from ? { from: from.utc().format('YYYY-MM-DD HH:mm:ss') } : {}),
+        ...(to ? { to: to.utc().format('YYYY-MM-DD HH:mm:ss') } : {})
     });
     const url = `${PREFIX}/orders?${params}`;
     return await getJsonOrThrow(url);

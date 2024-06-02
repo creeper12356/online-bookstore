@@ -1,7 +1,10 @@
 import { TableHead, TableCell, TableBody, List, ListItem, ListItemText, TableRow, Collapse, Button, SpeedDial, SpeedDialIcon, Fab, Box, Divider, Typography, Link } from "@mui/material";
 import { useState } from "react";
 import React from "react";
-
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+ 
+dayjs.extend(utc);
 
 const OrderTableItem = ({ order }) => {
     const [collapseOpen, setCollapseOpen] = useState(false);
@@ -21,7 +24,8 @@ const OrderTableItem = ({ order }) => {
                 {order.address}
             </TableCell>
             <TableCell align="left">
-                {order.time}
+                {/* 将UTC时间转为浏览器本地时间 */}
+                {dayjs.utc(order.time).local().format('YYYY-MM-DD HH:mm:ss')}
             </TableCell>
         </TableRow>
         <TableCell colSpan={5}>
