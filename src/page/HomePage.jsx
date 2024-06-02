@@ -3,10 +3,10 @@ import {
 } from "@mui/material";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
-import {useEffect, useState} from "react";
-import {getBooks} from "../service/book";
-import { PrivateLayout} from "../components/Layout";
-import {NavigatorIndexContext} from "../lib/Context";
+import { useEffect, useState } from "react";
+import { getBooks } from "../service/book";
+import { PrivateLayout } from "../components/Layout";
+import { NavigatorIndexContext } from "../lib/Context";
 
 const HomePage = () => {
     const [bookList, setBookList] = useState([]);
@@ -24,7 +24,7 @@ const HomePage = () => {
             .catch(e => { console.log(e); });
     }
     const handlePageChange = (event, value) => {
-        setSearchArgs({...searchArgs, page: value - 1});
+        setSearchArgs({ ...searchArgs, page: value - 1 });
     }
     useEffect(() => {
         getBookList(searchArgs.query, searchArgs.page, searchArgs.pageSize);
@@ -35,8 +35,10 @@ const HomePage = () => {
         <NavigatorIndexContext.Provider value={0} >
             <PrivateLayout>
                 <SearchBar onSearch={(q) => {
-                    setSearchArgs({...searchArgs, query: q, page: 0});
-                }}/>
+                    setSearchArgs({ ...searchArgs, query: q, page: 0 });
+                }}
+                    placeholder="搜索书名..."
+                />
                 <ImageList
                     cols={5}
                 >
@@ -51,7 +53,7 @@ const HomePage = () => {
                                     href={`/book/${book.id}`}
                                     stock={book.stock}
                                 />
-                            </ImageListItem> ))
+                            </ImageListItem>))
                     }
                 </ImageList>
                 <Pagination
