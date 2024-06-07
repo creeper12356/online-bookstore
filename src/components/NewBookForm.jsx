@@ -4,9 +4,9 @@ import { useState } from "react";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { createBook } from "../service/book";
 
-const NewBookForm = ({ visible, onSaved, onCanceled }) => {
+const NewBookForm = ({  onSaved, onCanceled }) => {
 
-    const [localBook, setLocalBook] = useState({stock: 0, price: 0  });
+    const [localBook, setLocalBook] = useState({stock: 0, price: 0 , cover: '' });
     const handleSubmit = (e) => {
         e.preventDefault();
         createBook(localBook)
@@ -18,7 +18,7 @@ const NewBookForm = ({ visible, onSaved, onCanceled }) => {
                 console.log(e);
             });
     };
-    return (visible ?
+    return (
         <form onSubmit={handleSubmit}>
             <Box display="flex" flexDirection="row" marginBottom={10}>
                 <Box display="flex" flexDirection="column" position="relative">
@@ -133,7 +133,7 @@ const NewBookForm = ({ visible, onSaved, onCanceled }) => {
                 </Box>
             </Box>
             <Divider />
-        </form> : <></>
+        </form> 
 
     );
 };

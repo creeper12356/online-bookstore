@@ -47,17 +47,21 @@ const AdminBookPage = () => {
                     </Typography>
 
                 </Fab>
-                <NewBookForm
-                    visible={newBookFormVisible}
-                    onSaved={(book) => {
-                        setBookList([book, ...bookList]);
-                        setNewBookFormVisible(false);
-                        messageOk('添加成功');
-                    }}
-                    onCanceled={() => {
-                        setNewBookFormVisible(false);
-                    }}
-                />
+                {
+                    newBookFormVisible ?
+                        <NewBookForm
+                            visible={newBookFormVisible}
+                            onSaved={(book) => {
+                                setBookList([book, ...bookList]);
+                                setNewBookFormVisible(false);
+                                messageOk('添加成功');
+                            }}
+                            onCanceled={() => {
+                                setNewBookFormVisible(false);
+                            }}
+                        /> : ''
+                }
+
 
                 <List>
                     {bookList.map(book => (
