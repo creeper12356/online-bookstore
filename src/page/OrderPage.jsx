@@ -11,6 +11,7 @@ import SearchBar from "../components/SearchBar";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { DateRangePicker } from "@mui/x-date-pickers-pro";
 import { Box, Button, Divider } from "@mui/material";
+import dayjs from "dayjs";
 
 const OrderPage = () => {
     const fetchAndSetOrders = (q, from, to) => {
@@ -48,7 +49,10 @@ const OrderPage = () => {
                                 onChange={(value) => {
                                     setSearchArgs({ ...searchArgs, from: value[0], to: value[1] });
                                 }}
-                                disableFuture
+                                shouldDisableDate={(date) => {
+                                    const tomorrow = dayjs().add(1, 'day');
+                                    return date.isAfter(tomorrow);
+                                }}
                             />
                         </div>
                     </LocalizationProvider>

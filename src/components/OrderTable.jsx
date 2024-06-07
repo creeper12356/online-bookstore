@@ -2,7 +2,7 @@ import { Table, TableContainer, TableHead, TableCell, TableBody } from "@mui/mat
 import OrderTableItem from "./OrderTableItem";
 
 const OrderTable = ({orders}) => {
-    const columns = ['收货人', '联系方式', '收货地址', '下单时间'];
+    const columns = ['收货人', '联系方式', '收货地址', '下单时间', '总价'];
     return <TableContainer>
         <Table>
             <TableHead>

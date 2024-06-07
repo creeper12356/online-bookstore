@@ -2,7 +2,7 @@ import {AppBar, Avatar, Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} f
 import {useContext} from "react";
 import {NavigatorIndexContext} from "../lib/Context";
 
-const Navigator = () => {
+const Navigator = ({userAvatar}) => {
     const navigatorIndex = useContext(NavigatorIndexContext);
     return (
         <AppBar
@@ -34,7 +34,7 @@ const Navigator = () => {
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                     <IconButton href="/profile">
-                        <Avatar src="/creeper.png" />
+                        <Avatar src={userAvatar} />
                     </IconButton>
                 </Box>
             </Toolbar>
