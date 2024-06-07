@@ -1,8 +1,10 @@
-import { Box, Button, ListItem, TextField } from "@mui/material";
+import { Box, Button, ListItem, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { updateBook } from "../service/book";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { imageUpload } from "../service/file";
 
-const BookAdminItem = ({ book, onDelete }) => {
+const BookAdminItem = ({ book, onDelete, onSave }) => {
     const [originalBook, setOriginalBook] = useState(book);
     const [isLocalChanged, setLocalChanged] = useState(false);
     const [localBook, setLocalBook] = useState(book);
@@ -15,7 +17,39 @@ const BookAdminItem = ({ book, onDelete }) => {
 
     return (<ListItem>
         <Box display="flex" flexDirection="row">
-            <img src={localBook.cover} alt={book.title} style={{ width: 150 }} />
+            <Box display="flex" flexDirection="column" position="relative">
+                <img src={localBook.cover} alt={localBook.title} style={{ width: 150 }} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                            imageUpload(file).then((res) => {
+                                console.log(book.id);
+                                setLocalBook({ ...localBook, cover: res.message })
+                            }).catch(e => {
+                                console.log(e);
+                            })
+                        }
+
+                    }}
+                    style={{ display: 'none' }}
+                    id={`avatar-input-${book.id}`}
+                />
+                <Button>
+                    <label
+                        htmlFor={`avatar-input-${book.id}`}
+                    >
+                        <Box display="flex" flexDirection="row">
+                            <FileUploadIcon />
+                            <Typography>
+                                上传封面
+                            </Typography>
+                        </Box>
+                    </label>
+                </Button>
+            </Box>
             <Box display="flex" flexDirection="row" gap={10}>
                 <Box display="flex" flexDirection="column" gap={3} marginLeft={10}>
                     <TextField
@@ -72,6 +106,7 @@ const BookAdminItem = ({ book, onDelete }) => {
                                 .then(() => {
                                     setOriginalBook(localBook);
                                     setLocalBook(localBook);
+                                    onSave?.();
                                 })
                                 .catch(e => {
                                     console.log(e);
@@ -89,7 +124,7 @@ const BookAdminItem = ({ book, onDelete }) => {
                         onDelete?.();
                     }}>删除</Button>
                 </Box>
-                
+
             </Box>
         </Box>
     </ListItem>);
