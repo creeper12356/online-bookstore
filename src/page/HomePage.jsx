@@ -46,12 +46,7 @@ const HomePage = () => {
                         bookList.map(book => (
                             <ImageListItem key={book.id}>
                                 <BookCard
-                                    img={book.cover}
-                                    title={book.title}
-                                    alt={book.alt}
-                                    price={book.price}
-                                    href={`/book/${book.id}`}
-                                    stock={book.stock}
+                                    book={book}
                                 />
                             </ImageListItem>))
                     }

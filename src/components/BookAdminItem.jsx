@@ -95,6 +95,14 @@ const BookAdminItem = ({ book, onDelete, onSave }) => {
                             setLocalBook({ ...localBook, description: e.target.value });
                         }}
                     />
+                    <TextField
+                        value={localBook.isbn}
+                        variant="standard"
+                        label="ISBN"
+                        onChange={(e) => {
+                            setLocalBook({ ...localBook, isbn: e.target.value });
+                        }}
+                    />
                 </Box>
                 <Box display="flex" flexDirection="column" gap={3} marginLeft={10}>
                     <Button
