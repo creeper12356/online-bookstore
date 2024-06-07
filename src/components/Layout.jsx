@@ -31,7 +31,7 @@ export function PrivateLayout({ children }) {
         checkLogin();
     }, []);
     return (<div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        <Navigator userAvatar={user.avatar}/>
+        <Navigator userAvatar={user.avatar} isAdmin={user.isAdmin} />
         <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column' }}>
             <Toolbar />
             {children}
