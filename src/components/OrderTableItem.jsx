@@ -1,4 +1,4 @@
-import { TableHead, TableCell, TableBody, List, ListItem, ListItemText, TableRow, Collapse, Button, SpeedDial, SpeedDialIcon, Fab, Box, Divider, Typography, Link } from "@mui/material";
+import { TableCell,  List, ListItem, TableRow, Collapse, Fab, Box, Divider, Typography, Link, Avatar } from "@mui/material";
 import { useState } from "react";
 import React from "react";
 import dayjs from 'dayjs';
@@ -6,14 +6,14 @@ import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 
-const OrderTableItem = ({ order }) => {
+const OrderTableItem = ({ order, showUser }) => {
     const [collapseOpen, setCollapseOpen] = useState(false);
 
     return <>
         <TableRow>
             <TableCell>
                 <Fab
-                    color={collapseOpen ? "primary": "default"}
+                    color={collapseOpen ? "primary" : "default"}
                     size="small"
                     onClick={() => { setCollapseOpen(!collapseOpen); }}>
                     {
@@ -21,6 +21,18 @@ const OrderTableItem = ({ order }) => {
                     }
                 </Fab>
             </TableCell>
+            {
+                showUser ?
+                    <TableCell>
+                        <Link href={`/profile/${order.user.id}`} underline="none">
+                            <Avatar src={order.user.avatar} />
+                            <Typography>
+                                {order.user.username}
+                            </Typography>
+                        </Link>
+                    </TableCell>
+                    : ''
+            }
             <TableCell>
                 {order.receiver}
             </TableCell>

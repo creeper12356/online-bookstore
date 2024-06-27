@@ -29,9 +29,6 @@ const AdminBookPage = () => {
     return (
         <NavigatorIndexContext.Provider value={4}>
             <PrivateLayout>
-                <Divider textAlign="left">
-                    管理书籍
-                </Divider>
                 <Fab
                     sx={{ alignSelf: "flex-end" }}
                     color={newBookFormVisible ? "info" : "primary"}

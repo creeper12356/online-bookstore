@@ -2,7 +2,7 @@ import {AppBar, Avatar, Box, IconButton, Link, Tab, Tabs, Toolbar, Typography} f
 import {useContext} from "react";
 import {NavigatorIndexContext} from "../lib/Context";
 
-const Navigator = ({userAvatar, isAdmin=false}) => {
+const Navigator = ({userAvatar, avatarLink, isAdmin=false}) => {
     const navigatorIndex = useContext(NavigatorIndexContext);
     return (
         <AppBar
@@ -31,12 +31,14 @@ const Navigator = ({userAvatar, isAdmin=false}) => {
                     <Tab label="订单" href="/order"/>
                     <Tab label="排行" />
                     {isAdmin && <Tab label="书籍管理" href="/admin/books"/>}
+                    {isAdmin && <Tab label="订单管理" href="/admin/orders"/>}
+                    {isAdmin && <Tab label="用户管理" href="/admin/users"/>}
                 </Tabs>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton href="/profile">
+                    {<IconButton href={avatarLink}>
                         <Avatar src={userAvatar} />
-                    </IconButton>
+                    </IconButton>}
                 </Box>
             </Toolbar>
         </AppBar>

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Route, Router, Routes } from "react-router";
 import HomePage from "../page/HomePage";
 import { BrowserRouter } from "react-router-dom";
 import LoginPage from "../page/LoginPage";
@@ -7,9 +7,11 @@ import CartPage from "../page/CartPage";
 import ProfilePage from "../page/ProfilePage";
 import OrderPage from "../page/OrderPage";
 import RegisterPage from "../page/RegisterPage";
-import AdminBookPage from "../page/BookAdminPage";
+import AdminBookPage from "../page/AdminBookPage";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
+import AdminOrderPage from "../page/AdminOrderPage";
+import AdminUserPage from "../page/AdminUserPage";
 
 const AppRouter = () => {
     return (
@@ -57,7 +59,7 @@ const AppRouter = () => {
                     element={<RegisterPage />}
                 />
                 <Route
-                    path="/profile"
+                    path="/profile/:userId"
                     element={
                         <UserRoute>
                             <ProfilePage />
@@ -69,6 +71,22 @@ const AppRouter = () => {
                     element={
                         <AdminRoute>
                             <AdminBookPage />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/orders"
+                    element={
+                        <AdminRoute>
+                            <AdminOrderPage />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/users"
+                    element={
+                        <AdminRoute>
+                            <AdminUserPage />
                         </AdminRoute>
                     }
                 />

@@ -1,5 +1,5 @@
 import '../css/LoginPage.css';
-import {BasicLayout} from "../components/Layout";
+import { BasicLayout} from "../components/Layout";
 import { useNavigate } from 'react-router';
 import { useOkHandler } from '../hooks/useOkHandler';
 import { useErrorHandler } from '../hooks/useErrorHandler';

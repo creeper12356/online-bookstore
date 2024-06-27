@@ -1,7 +1,7 @@
 import { Avatar, Button, Chip, Divider, Link, TextField } from "@mui/material";
 import ValueCounter from "./ValueCounter";
 
-const UserProfile = ({ user }) => {
+const UserProfile = ({ user , isMe }) => {
     return <div style={{
         display: 'flex',
         flexDirection: 'row',
@@ -36,10 +36,10 @@ const UserProfile = ({ user }) => {
                 width: '70%',
                 marginTop: '10px',
             }}>
-                <ValueCounter value={1} label="关注" />
+                <ValueCounter value={0} label="关注" />
                 <ValueCounter value={0} label="粉丝" />
                 <ValueCounter value={user.balance / 100} label="余额" />
-                <Button variant="outlined">编辑资料</Button>
+                {isMe ? <Button variant="outlined">编辑资料</Button> : ''}
             </div>
         </div>
     </div>
