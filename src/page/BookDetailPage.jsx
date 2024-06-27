@@ -33,7 +33,7 @@ const BookDetailPage = () => {
         getBookDetail(id);
     }, [id]);
     return (
-        <NavigatorIndexContext.Provider value={4}>
+        <NavigatorIndexContext.Provider value={-1}>
             <PrivateLayout>
                 <Box sx={{display: 'flex', flexDirection: 'row'}}>
                     <Box

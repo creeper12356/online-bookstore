@@ -21,7 +21,7 @@ const ProfilePage = () => {
         getUser();
     }, []);
     return (
-        <NavigatorIndexContext.Provider value={4}>
+        <NavigatorIndexContext.Provider value={-1}>
             <PrivateLayout>
                 <div className="profile-page-container">
                     <Button

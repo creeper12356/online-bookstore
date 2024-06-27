@@ -1,8 +1,7 @@
 import Navigator from "./Navigator";
 import { Box, Toolbar } from "@mui/material";
-import { useNavigate } from "react-router";
-import { getMe } from "../service/user";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../lib/Context";
 
 export function BasicLayout({ children }) {
     return (
@@ -17,19 +16,9 @@ export function BasicLayout({ children }) {
 };
 
 export function PrivateLayout({ children }) {
-    const navigate = useNavigate();
-    const [user, setUser] = useState({});
-    const checkLogin = async () => {
-        getMe().then(user => {
-            setUser(user);
-        })
-        .catch(e => {
-            navigate('/login');
-        });
-    };
-    useEffect(() => {
-        checkLogin();
-    }, []);
+    const user = useContext(UserContext);
+    console.log("user = ", user);
+
     return (<div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <Navigator userAvatar={user.avatar} isAdmin={user.isAdmin} />
         <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column' }}>

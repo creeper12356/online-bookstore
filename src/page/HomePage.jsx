@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 import { getBooks } from "../service/book";
 import { PrivateLayout } from "../components/Layout";
-import { NavigatorIndexContext } from "../lib/Context";
+import { NavigatorIndexContext, UserContext } from "../lib/Context";
 
 const HomePage = () => {
     const [bookList, setBookList] = useState([]);

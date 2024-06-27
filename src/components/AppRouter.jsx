@@ -1,6 +1,6 @@
-import {Route, Routes} from "react-router";
+import { Route, Routes } from "react-router";
 import HomePage from "../page/HomePage";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import LoginPage from "../page/LoginPage";
 import BookDetailPage from "../page/BookDetailPage";
 import CartPage from "../page/CartPage";
@@ -8,6 +8,8 @@ import ProfilePage from "../page/ProfilePage";
 import OrderPage from "../page/OrderPage";
 import RegisterPage from "../page/RegisterPage";
 import AdminBookPage from "../page/BookAdminPage";
+import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
 
 const AppRouter = () => {
     return (
@@ -15,20 +17,36 @@ const AppRouter = () => {
             <Routes>
                 <Route
                     path="/"
-                    element={<HomePage />}
+                    element={
+                        <UserRoute>
+                            <HomePage />
+                        </UserRoute>
+                    }
                     index
                 />
                 <Route
                     path="/book/:id"
-                    element={<BookDetailPage />}
+                    element={
+                        <UserRoute>
+                            <BookDetailPage />
+                        </UserRoute>
+                    }
                 />
                 <Route
                     path="/cart"
-                    element={<CartPage />}
+                    element={
+                        <UserRoute>
+                            <CartPage />
+                        </UserRoute>
+                    }
                 />
                 <Route
                     path="/order"
-                    element={<OrderPage />}
+                    element={
+                        <UserRoute>
+                            <OrderPage />
+                        </UserRoute>
+                    }
                 />
                 <Route
                     path="/login"
@@ -40,11 +58,19 @@ const AppRouter = () => {
                 />
                 <Route
                     path="/profile"
-                    element={<ProfilePage />}
+                    element={
+                        <UserRoute>
+                            <ProfilePage />
+                        </UserRoute>
+                    }
                 />
-                <Route 
+                <Route
                     path="/admin/books"
-                    element={<AdminBookPage />}
+                    element={
+                        <AdminRoute>
+                            <AdminBookPage />
+                        </AdminRoute>
+                    }
                 />
             </Routes>
         </BrowserRouter>
