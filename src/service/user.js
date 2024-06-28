@@ -24,3 +24,13 @@ export async function unbanUser(userId) {
     const url = `${PREFIX}/users/${userId}/unban`;
     return await postJsonOrThrow(url);
 }
+
+export async function getUserRank(from, to, maxcount) {
+    const params = new URLSearchParams({
+        ...(from ? { from: from.utc().format('YYYY-MM-DD HH:mm:ss') } : {}),
+        ...(to ? { to: to.utc().format('YYYY-MM-DD HH:mm:ss') } : {}),
+        maxcount
+    });
+    const url = `${PREFIX}/users/rank?${params}`;
+    return await getJsonOrThrow(url);
+}

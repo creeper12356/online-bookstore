@@ -3,6 +3,8 @@ import { useState } from "react";
 import React from "react";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import PriceNumber from "./PriceNumber";
+import UserBriefBox from "./UserBriefBox";
 
 dayjs.extend(utc);
 
@@ -24,12 +26,7 @@ const OrderTableItem = ({ order, showUser }) => {
             {
                 showUser ?
                     <TableCell>
-                        <Link href={`/profile/${order.user.id}`} underline="none">
-                            <Avatar src={order.user.avatar} />
-                            <Typography>
-                                {order.user.username}
-                            </Typography>
-                        </Link>
+                        <UserBriefBox user={order.user} />
                     </TableCell>
                     : ''
             }
@@ -47,7 +44,7 @@ const OrderTableItem = ({ order, showUser }) => {
                 {dayjs.utc(order.time).local().format('YYYY-MM-DD HH:mm:ss')}
             </TableCell>
             <TableCell>
-                <Typography variant="h6" color="red">{`¥${order.totalPrice / 100} `}</Typography>
+                <PriceNumber price={order.totalPrice} />
             </TableCell>
         </TableRow>
         <TableCell colSpan={6}>
