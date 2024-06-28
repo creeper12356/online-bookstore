@@ -34,3 +34,12 @@ export async function getUserRank(from, to, maxcount) {
     const url = `${PREFIX}/users/rank?${params}`;
     return await getJsonOrThrow(url);
 }
+
+export async function getUserStatistic(from, to) {
+    const params = new URLSearchParams({
+        ...(from ? { from: from.utc().format('YYYY-MM-DD HH:mm:ss') } : {}),
+        ...(to ? { to: to.utc().format('YYYY-MM-DD HH:mm:ss') } : {})
+    });
+    const url = `${PREFIX}/users/statistic?${params}`;
+    return await getJsonOrThrow(url);
+}

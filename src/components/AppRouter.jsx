@@ -13,6 +13,7 @@ import UserRoute from "./UserRoute";
 import AdminOrderPage from "../page/AdminOrderPage";
 import AdminUserPage from "../page/AdminUserPage";
 import RankPage from "../page/RankPage";
+import StatisticPage from "../page/StatisticPage";
 
 const AppRouter = () => {
     return (
@@ -64,6 +65,14 @@ const AppRouter = () => {
                     element={
                         <UserRoute>
                             <ProfilePage />
+                        </UserRoute>
+                    }
+                />
+                <Route 
+                    path="/statistic"
+                    element={
+                        <UserRoute>
+                            <StatisticPage />
                         </UserRoute>
                     }
                 />

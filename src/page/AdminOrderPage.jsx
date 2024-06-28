@@ -32,7 +32,7 @@ const AdminOrderPage = () => {
     }, [searchArgs]);
 
     return (
-        <NavigatorIndexContext.Provider value={5}>
+        <NavigatorIndexContext.Provider value={6}>
             <PrivateLayout>
             <Box gap="10px" display="flex" flexDirection="column">
                     <SearchBar placeholder="按书名筛选..." onSearch={q => {

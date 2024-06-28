@@ -27,7 +27,7 @@ const AdminBookPage = () => {
     }, []);
 
     return (
-        <NavigatorIndexContext.Provider value={4}>
+        <NavigatorIndexContext.Provider value={5}>
             <PrivateLayout>
                 <Fab
                     sx={{ alignSelf: "flex-end" }}

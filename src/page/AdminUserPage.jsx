@@ -18,7 +18,7 @@ const AdminUserPage = () => {
         fetchAndSetUsers();
     }, []);
     return (
-        <NavigatorIndexContext.Provider value={6}>
+        <NavigatorIndexContext.Provider value={7}>
             <PrivateLayout>
                 <UserTable users={users} />
             </PrivateLayout>
