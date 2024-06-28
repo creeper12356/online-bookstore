@@ -29,7 +29,7 @@ const Navigator = ({userAvatar, avatarLink, isAdmin=false}) => {
                     <Tab label="首页" href="/"/>
                     <Tab label="购物车" href="/cart" />
                     <Tab label="订单" href="/order"/>
-                    <Tab label="排行" />
+                    {isAdmin && <Tab label="排行" href="/admin/rank"/>}
                     {isAdmin && <Tab label="书籍管理" href="/admin/books"/>}
                     {isAdmin && <Tab label="订单管理" href="/admin/orders"/>}
                     {isAdmin && <Tab label="用户管理" href="/admin/users"/>}

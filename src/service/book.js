@@ -22,3 +22,13 @@ export async function deleteBook(id) {
     let url = `${PREFIX}/books/${id}`;
     return await delJsonOrThrow(url);
 }
+
+export async function getBookRank(from, to, maxcount) {
+    const params = new URLSearchParams({
+        ...(from ? { from: from.utc().format('YYYY-MM-DD HH:mm:ss') } : {}),
+        ...(to ? { to: to.utc().format('YYYY-MM-DD HH:mm:ss') } : {}),
+        maxcount
+    });
+    const url = `${PREFIX}/books/rank?${params}`;
+    return await getJsonOrThrow(url);
+}

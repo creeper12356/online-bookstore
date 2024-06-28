@@ -12,6 +12,7 @@ import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import AdminOrderPage from "../page/AdminOrderPage";
 import AdminUserPage from "../page/AdminUserPage";
+import RankPage from "../page/RankPage";
 
 const AppRouter = () => {
     return (
@@ -64,6 +65,14 @@ const AppRouter = () => {
                         <UserRoute>
                             <ProfilePage />
                         </UserRoute>
+                    }
+                />
+                <Route
+                    path="/admin/rank"
+                    element={
+                        <AdminRoute>
+                            <RankPage />
+                        </AdminRoute>
                     }
                 />
                 <Route
