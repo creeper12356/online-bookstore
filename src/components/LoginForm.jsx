@@ -70,7 +70,7 @@ const LoginForm = (
                                         setRememberMe(e.target.checked);
                                     }}
                                 />}
-                            label="Remember me"
+                            label="记住我"
                         />
 
                         <Button
@@ -81,8 +81,8 @@ const LoginForm = (
                         >
                             {loginButtonText ?? 'Login'}
                         </Button>
-                        <Link href={registerUrl} variant="body2">
-                            {"Don't have an account? Sign Up"}
+                        <Link href={registerUrl} variant="body2" underline="none">
+                            {"没有账号？去注册"}
                         </Link>
                     </form>
                 </div>

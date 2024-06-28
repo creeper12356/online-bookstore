@@ -1,4 +1,4 @@
-import { getJsonOrThrow, postJsonOrThrow, PREFIX} from "./common";
+import { getJsonOrThrow, postJsonOrThrow, PREFIX, putJsonOrThrow} from "./common";
 
 export async function getMe() {
     const url = `${PREFIX}/users/me`;
@@ -42,4 +42,9 @@ export async function getUserStatistic(from, to) {
     });
     const url = `${PREFIX}/users/statistic?${params}`;
     return await getJsonOrThrow(url);
+}
+
+export async function updateUserInfo(user) {
+    const url = `${PREFIX}/users`;
+    return await putJsonOrThrow(url, user);
 }

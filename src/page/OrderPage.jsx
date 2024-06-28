@@ -5,13 +5,10 @@ import { getOrders } from "../service/order";
 import OrderTable from "../components/OrderTable";
 
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import SearchBar from "../components/SearchBar";
 import { useErrorHandler } from "../hooks/useErrorHandler";
-import { DateRangePicker } from "@mui/x-date-pickers-pro";
-import { Box, Button, Divider } from "@mui/material";
-import dayjs from "dayjs";
+import { Box, Divider } from "@mui/material";
+import SimpleDateRangePicker from "../components/SimpleDateRangePicker";
 
 const OrderPage = () => {
     const fetchAndSetOrders = (q, from, to) => {
@@ -38,24 +35,9 @@ const OrderPage = () => {
                     <SearchBar placeholder="按书名筛选..." onSearch={q => {
                         setSearchArgs({ ...searchArgs, q: q });
                     }} />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }} >
-                            <Button onClick={() => {
-                                setSearchArgs({ ...searchArgs, from: null, to: null });
-                            }}>清除</Button>
-                            <DateRangePicker
-                                value={[searchArgs.from, searchArgs.to]}
-                                localeText={{ start: '开始日期', end: '结束日期' }}
-                                onChange={(value) => {
-                                    setSearchArgs({ ...searchArgs, from: value[0], to: value[1] });
-                                }}
-                                shouldDisableDate={(date) => {
-                                    const tomorrow = dayjs().add(1, 'day');
-                                    return date.isAfter(tomorrow);
-                                }}
-                            />
-                        </div>
-                    </LocalizationProvider>
+                    <SimpleDateRangePicker onRangeChanged={(from, to) => {
+                        setSearchArgs({ ...searchArgs, from: from, to: to });
+                    }}/>
                     <Divider textAlign="left">{`订单列表（${orders.length}条）`}</Divider>
                     <OrderTable orders={orders} />
                 </Box>

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import { useOkHandler } from '../hooks/useOkHandler';
 import { useErrorHandler } from '../hooks/useErrorHandler';
 import RegisterForm from '../components/RegisterForm';
-
 const RegisterPage = () => {
     const navigate = useNavigate();
     const handleRegisterOk = (message) => {

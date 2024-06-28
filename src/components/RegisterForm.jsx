@@ -1,18 +1,19 @@
-import {Avatar, Button, Container, Paper, TextField, Typography} from "@mui/material";
-import {useState} from "react";
+import { Avatar, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import '../css/RegisterPage.css';
 import { register } from '../service/auth';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const RegisterForm = (
     {
-        title, 
-        userLabel, 
-        passwordLabel, 
+        title,
+        userLabel,
+        passwordLabel,
         repeatPasswordLabel,
         emailLabel,
         registerButtonText,
         onRegisterOk,
         onRegisterError
-    } ) => {
+    }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -20,11 +21,11 @@ const RegisterForm = (
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if(password !== repeatPassword) {
+        if (password !== repeatPassword) {
             onRegisterError?.('两次输入的密码不一致');
-            return ;
+            return;
         }
-        
+
         register(username, password, email)
             .then(result => {
                 onRegisterOk?.(result.message);
@@ -37,9 +38,12 @@ const RegisterForm = (
         <Container className="register-page-container">
             <Paper className="register-page-paper">
                 <div className="register-page-div">
+                    <IconButton sx={{alignSelf: 'flex-start'}} href="/login">
+                        <ArrowBackIcon />
+                    </IconButton>
                     <Avatar />
                     <Typography component="h1" variant="h5">
-                        { title ?? 'Sign up' }
+                        {title ?? 'Sign up'}
                     </Typography>
                     <form onSubmit={onSubmit}>
                         <TextField
@@ -99,13 +103,13 @@ const RegisterForm = (
                             type="submit"
                             fullWidth
                             variant="contained"
-                            style={{marginBottom: '10px'}}
+                            style={{ marginBottom: '10px' , marginTop: '20px' }}
                         >
                             {registerButtonText ?? 'Register'}
                         </Button>
                     </form>
                 </div>
             </Paper>
-        </Container> );
+        </Container>);
 }
 export default RegisterForm;

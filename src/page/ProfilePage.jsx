@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { banUser, getMe, getUserProfile, unbanUser } from "../service/user";
+import { banUser, getMe, getUserProfile, unbanUser, updateUserInfo } from "../service/user";
 import { Button } from "@mui/material";
 import { PrivateLayout } from "../components/Layout";
 import { NavigatorIndexContext, UserContext } from "../lib/Context";
@@ -9,6 +9,8 @@ import '../css/ProfilePage.css';
 import { logout } from "../service/auth";
 import { useParams } from "react-router";
 import { useOkHandler } from "../hooks/useOkHandler";
+import UserEditForm from "../components/UserEditForm";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 
 const ProfilePage = () => {
     const { userId } = useParams();
@@ -16,6 +18,8 @@ const ProfilePage = () => {
     const currentUser = useContext(UserContext);
     const [isMe, setIsMe] = useState(false);
     const [messageOk, OkSnackbar] = useOkHandler();
+    const [messageError, ErrorSnackbar] = useErrorHandler();
+    const [isEditOpen, setIsEditOpen] = useState(false);
 
     const getUser = () => {
         getUserProfile(userId)
@@ -42,14 +46,14 @@ const ProfilePage = () => {
                             color={user.isBanned ? 'error' : 'primary'}
                             onClick={user.isBanned ? () => {
                                 unbanUser(user.id).then(res => {
-                                    setUser({...user, isBanned: false});
+                                    setUser({ ...user, isBanned: false });
                                     messageOk(res.message);
                                 }).catch(e => {
                                     console.log(e);
                                 });
                             } : () => {
                                 banUser(user.id).then(res => {
-                                    setUser({...user, isBanned: true});
+                                    setUser({ ...user, isBanned: true });
                                     messageOk(res.message);
                                 }).catch(e => {
                                     console.log(e);
@@ -69,8 +73,39 @@ const ProfilePage = () => {
                         </Button> : ''}
                     </div>
                     <OkSnackbar />
-                    <UserProfile user={user} isMe={isMe} />
+                    <ErrorSnackbar />
+                    <UserProfile
+                        user={user}
+                        isMe={isMe}
+                        onProfileEdit={() => {
+                            setIsEditOpen(true);
+                        }}
+                        onAvatarChange={(avatar) => {
+                            updateUserInfo({ ...user, avatar }).then(res => {
+                                messageOk(res.message);
+                                setUser({ ...user, avatar });
+                            }).catch(e => {
+                                messageError(e.message);
+                            });
+                        }}
+                    />
                 </div>
+                <UserEditForm
+                    user={user}
+                    open={isEditOpen}
+                    onClose={() => {
+                        setIsEditOpen(false);
+                    }}
+                    onSubmit={(submitUser) => {
+                        updateUserInfo(submitUser).then(res => {
+                            messageOk(res.message);
+                            setUser({ ...user, username: submitUser.username, email: submitUser.email })
+                        }).catch(e => {
+                            messageError(e.message);
+                        })
+                        setIsEditOpen(false);
+                    }}
+                />
             </PrivateLayout>
         </NavigatorIndexContext.Provider>
     );

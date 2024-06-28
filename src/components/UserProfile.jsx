@@ -1,12 +1,49 @@
 import { Avatar, Button, Chip, Divider, Link, TextField } from "@mui/material";
 import ValueCounter from "./ValueCounter";
+import { imageUpload } from "../service/file";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { Box, Typography } from "@mui/material";
 
-const UserProfile = ({ user , isMe }) => {
+
+const UserProfile = ({ user, isMe, onProfileEdit, onAvatarChange }) => {
     return <div style={{
         display: 'flex',
         flexDirection: 'row',
     }}>
-        <Avatar src={user.avatar} sx={{ width: 150, height: 150 }} />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <Avatar src={user.avatar} sx={{ width: 150, height: 150 }} />
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                        imageUpload(file).then((res) => {
+                            onAvatarChange?.(res.message);
+                        }).catch(e => {
+                            console.log(e);
+                        })
+                    }
+
+                }}
+                style={{ display: 'none' }}
+                id={`avatar-input-${user.id}`}
+            />
+            {isMe ? <Button>
+                <label
+                    htmlFor={`avatar-input-${user.id}`}
+                >
+                    <Box display="flex" flexDirection="row">
+                        <FileUploadIcon />
+                        <Typography>
+                            修改头像
+                        </Typography>
+                    </Box>
+                </label>
+            </Button> : ''}
+        </div>
+
+
         <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -15,7 +52,7 @@ const UserProfile = ({ user , isMe }) => {
             flexGrow: 1,
             gap: 20,
         }}>
-            <div style={{ font: '60px bold', display:'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <div style={{ font: '60px bold', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                 <div>
                     {user.username}
                 </div>
@@ -39,7 +76,9 @@ const UserProfile = ({ user , isMe }) => {
                 <ValueCounter value={0} label="关注" />
                 <ValueCounter value={0} label="粉丝" />
                 <ValueCounter value={user.balance / 100} label="余额" />
-                {isMe ? <Button variant="outlined">编辑资料</Button> : ''}
+                {isMe ? <Button variant="outlined" onClick={() => {
+                    onProfileEdit?.();
+                }}>编辑资料</Button> : ''}
             </div>
         </div>
     </div>

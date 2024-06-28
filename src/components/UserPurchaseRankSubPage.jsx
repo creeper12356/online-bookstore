@@ -1,9 +1,6 @@
 import { Button, Divider, Link, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { DateRangePicker } from "@mui/x-date-pickers-pro";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import SimpleDateRangePicker from "./SimpleDateRangePicker";
 import { getUserRank } from "../service/user";
 import RankNumber from "./RankNumber";
 import PriceNumber from "./PriceNumber";
@@ -25,24 +22,9 @@ const UserPurchaseRankSubPage = () => {
     return (
         <>
             <Divider textAlign="left" sx={{ marginBottom: 5 }}>用户消费榜</Divider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }} >
-                    <Button onClick={() => {
-                        setSearchArgs({ ...searchArgs, from: null, to: null });
-                    }}>清除</Button>
-                    <DateRangePicker
-                        value={[searchArgs.from, searchArgs.to]}
-                        localeText={{ start: '开始日期', end: '结束日期' }}
-                        onChange={(value) => {
-                            setSearchArgs({ ...searchArgs, from: value[0], to: value[1] });
-                        }}
-                        shouldDisableDate={(date) => {
-                            const tomorrow = dayjs().add(1, 'day');
-                            return date.isAfter(tomorrow);
-                        }}
-                    />
-                </div>
-            </LocalizationProvider>
+            <SimpleDateRangePicker onRangeChanged={(from, to) => {
+                setSearchArgs({ from: from, to: to });
+            }} />
             <Table style={{ border: '1px solid', margin: 20 }}>
                 <TableHead>
                     {column.map((attr, index) =>

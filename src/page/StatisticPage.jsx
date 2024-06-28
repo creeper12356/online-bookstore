@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { PrivateLayout } from "../components/Layout";
 import { NavigatorIndexContext } from "../lib/Context"
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Box, Button, Divider, Link, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { DateRangePicker } from "@mui/x-date-pickers-pro";
-import dayjs from "dayjs";
+import { Box, Button, Divider, Link, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import { getUserStatistic } from "../service/user";
 import PriceNumber from "../components/PriceNumber";
-import PriceBox from "../components/PriceBox";
+import SimpleDateRangePicker from "../components/SimpleDateRangePicker";
 
 const StatisticPage = () => {
     const columns = ['书名', '封面', '单价', '数量', '总价'];
@@ -27,24 +23,9 @@ const StatisticPage = () => {
 
     return <NavigatorIndexContext.Provider value={3}>
         <PrivateLayout>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }} >
-                    <Button onClick={() => {
-                        setSearchArgs({ ...searchArgs, from: null, to: null });
-                    }}>清除</Button>
-                    <DateRangePicker
-                        value={[searchArgs.from, searchArgs.to]}
-                        localeText={{ start: '开始日期', end: '结束日期' }}
-                        onChange={(value) => {
-                            setSearchArgs({ ...searchArgs, from: value[0], to: value[1] });
-                        }}
-                        shouldDisableDate={(date) => {
-                            const tomorrow = dayjs().add(1, 'day');
-                            return date.isAfter(tomorrow);
-                        }}
-                    />
-                </div>
-            </LocalizationProvider>
+            <SimpleDateRangePicker onRangeChanged={(from, to) => {
+                setSearchArgs({ from: from, to: to });
+            }} />
             <Box>总金额：{<PriceNumber price={books.reduce((total, book) => total + book.totalPrice, 0)} />}</Box>
             <Divider />
             <Table>

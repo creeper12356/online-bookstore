@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro";
 import dayjs from "dayjs";
 import RankNumber from "./RankNumber";
+import SimpleDateRangePicker from "./SimpleDateRangePicker";
 
 const BookSalesRankSubPage = () => {
     const [bookSalesList, setBookSalesList] = useState([]);
@@ -27,28 +28,13 @@ const BookSalesRankSubPage = () => {
 
     return <>
         <Divider textAlign="left" sx={{ marginBottom: 5 }}>书籍热销榜</Divider>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }} >
-                <Button onClick={() => {
-                    setSearchArgs({ ...searchArgs, from: null, to: null });
-                }}>清除</Button>
-                <DateRangePicker
-                    value={[searchArgs.from, searchArgs.to]}
-                    localeText={{ start: '开始日期', end: '结束日期' }}
-                    onChange={(value) => {
-                        setSearchArgs({ ...searchArgs, from: value[0], to: value[1] });
-                    }}
-                    shouldDisableDate={(date) => {
-                        const tomorrow = dayjs().add(1, 'day');
-                        return date.isAfter(tomorrow);
-                    }}
-                />
-            </div>
-        </LocalizationProvider>
+        <SimpleDateRangePicker onRangeChanged={(from, to) => {
+            setSearchArgs({ from: from, to: to });
+        }} />
         <Table style={{ border: '1px solid', margin: 20 }}>
             <TableHead>
                 {column.map((attr, index) =>
-                    <TableCell style={{width: index === 0 || index === 1 || index === 3 ? '20%' : '40%'}}>{attr}</TableCell>)}
+                    <TableCell style={{ width: index === 0 || index === 1 || index === 3 ? '20%' : '40%' }}>{attr}</TableCell>)}
             </TableHead>
             <TableBody>
                 {bookSalesList.map((book, index) =>
