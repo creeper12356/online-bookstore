@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { banUser, getMe, getUserProfile, unbanUser, updateUserInfo } from "../service/user";
 import { Button } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
 import { PrivateLayout } from "../components/Layout";
-import { NavigatorIndexContext, UserContext } from "../lib/Context";
 import UserProfile from "../components/UserProfile";
+import { NavigatorIndexContext, UserContext } from "../lib/Context";
+import { banUser, getUserProfile, unbanUser, updateUserInfo } from "../service/user";
 
-import '../css/ProfilePage.css';
-import { logout } from "../service/auth";
-import { useParams } from "react-router";
-import { useOkHandler } from "../hooks/useOkHandler";
+import { useNavigate, useParams } from "react-router";
 import UserEditForm from "../components/UserEditForm";
+import '../css/ProfilePage.css';
 import { useErrorHandler } from "../hooks/useErrorHandler";
-
+import { useOkHandler } from "../hooks/useOkHandler";
+import { logout } from "../service/auth";
 const ProfilePage = () => {
     const { userId } = useParams();
     const [user, setUser] = useState({});
@@ -20,6 +19,8 @@ const ProfilePage = () => {
     const [messageOk, OkSnackbar] = useOkHandler();
     const [messageError, ErrorSnackbar] = useErrorHandler();
     const [isEditOpen, setIsEditOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const getUser = () => {
         getUserProfile(userId)
@@ -64,9 +65,11 @@ const ProfilePage = () => {
                         </Button> : ''}
                         {isMe ? <Button
                             variant="outlined"
-                            href="/login"
                             onClick={async () => {
-                                await logout();
+                                let result = await logout();
+                                console.log('result: ', JSON.stringify(result));
+                                console.log(result.duration);
+                                navigate('/login');
                             }}
                         >
                             登出

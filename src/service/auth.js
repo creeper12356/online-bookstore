@@ -10,5 +10,5 @@ export async function login(username, password) {
 }
 export async function logout() {
     let url = `${PREFIX}/auth/logout`;
-    await putJsonOrThrow(url, {});
+    return await putJsonOrThrow(url, {});
 }
