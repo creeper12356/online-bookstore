@@ -1,17 +1,16 @@
-import { PrivateLayout } from "../components/Layout";
-import { useEffect, useState } from "react";
-import { deleteCartItem, getCartItems, updateCartItem } from "../service/cart";
-import '../css/CartPage.css'
-import React from "react";
 import {
     Button
 } from "@mui/material";
-import { NavigatorIndexContext } from "../lib/Context";
+import React, { useContext, useEffect, useState } from "react";
 import CartItemTable from "../components/CartItemTable";
-import { useErrorHandler } from "../hooks/useErrorHandler";
-import { addOrder } from "../service/order";
-import { useOkHandler } from "../hooks/useOkHandler";
+import { PrivateLayout } from "../components/Layout";
 import OrderDialog from "../components/OrderDialog";
+import '../css/CartPage.css';
+import { useErrorHandler } from "../hooks/useErrorHandler";
+import { useOkHandler } from "../hooks/useOkHandler";
+import { NavigatorIndexContext, UserContext } from "../lib/Context";
+import { deleteCartItem, getCartItems, updateCartItem } from "../service/cart";
+import { createWebSocketConnection } from "../service/websocket";
 
 
 
@@ -23,6 +22,8 @@ const CartPage = () => {
     const [messageOk, OkSnackbar] = useOkHandler();
     const [messageError, ErrorSnackbar] = useErrorHandler();
     const [orderFormOpen, setOrderFormOpen] = useState(false);
+
+    const user = useContext(UserContext);
 
     useEffect(() => {
         getCartItemList();
@@ -97,28 +98,44 @@ const CartPage = () => {
                     }}
                     onSubmit={(receiver, address, tel) => {
                         setOrderFormOpen(false);
-                        addOrder({
-                            orderItems: selectedCartItemList.map(
+
+                        const message = JSON.stringify({
+                            books: selectedCartItemList.map(
                                 cartItem => ({ bookId: cartItem.bookId, number: cartItem.number })
                             ),
                             receiver: receiver,
                             address: address,
                             tel: tel,
-                        }).then(() => {
-                            selectedCartItemList.forEach(cartItem => {
-                                deleteCartItem(cartItem.id).catch(e => {
-                                    messageError(e.message);
-                                });
-                            });
-                            setCartItemList(
-                                cartItemList.filter(
-                                    cartItem => !selectedCartItemList.includes(cartItem)
-                                )
-                            );
-                            messageOk('下单成功');
-                        }).catch(e => {
-                            messageError(e.message);
+                            userId: user.id,
                         });
+                        console.log('message: ' + JSON.stringify(message));
+                        createWebSocketConnection('ws://localhost:8080/orders', message)
+                            .then(socket => {
+                                console.log('socket: ' + JSON.stringify(socket));
+                                socket.onmessage = (msg) => {
+                                    console.log(msg);
+                                    let res = JSON.parse(msg.data);
+                                    if (res.ok) {
+                                        selectedCartItemList.forEach(cartItem => {
+                                            deleteCartItem(cartItem.id).catch(e => {
+                                                messageError(e.message);
+                                            });
+                                        });
+                                        setCartItemList(
+                                            cartItemList.filter(
+                                                cartItem => !selectedCartItemList.includes(cartItem)
+                                            )
+                                        );
+                                        messageOk('下单成功');
+                                        socket.close();
+                                    } else {
+                                        messageError(res.message);
+                                    }
+                                }
+                            })
+                            .catch(e => {
+                                messageError(e);
+                            });
                     }
                     } />
             </PrivateLayout>

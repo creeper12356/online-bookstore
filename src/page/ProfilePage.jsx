@@ -68,8 +68,10 @@ const ProfilePage = () => {
                             onClick={async () => {
                                 let result = await logout();
                                 console.log('result: ', JSON.stringify(result));
-                                console.log(result.duration);
-                                navigate('/login');
+                                messageOk(`本次在线时长：${result.duration}s`);
+                                setTimeout(() => {
+                                    navigate('/login');
+                                }, 1000);
                             }}
                         >
                             登出
