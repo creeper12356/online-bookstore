@@ -32,3 +32,8 @@ export async function getBookRank(from, to, maxcount) {
     const url = `${PREFIX}/books/rank?${params}`;
     return await getJsonOrThrow(url);
 }
+
+export async function getBookAuthor(title) {
+    const url = `${PREFIX}/getauthor/books/author/${title}`;
+    return await getJsonOrThrow(url);
+}

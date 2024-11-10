@@ -32,7 +32,7 @@ const AdminBookPage = () => {
                 <Fab
                     sx={{ alignSelf: "flex-end" }}
                     color={newBookFormVisible ? "info" : "primary"}
-                    title="添加书籍"
+                    title="添加书籍"            
                     onClick={() => {
                         setNewBookFormVisible(!newBookFormVisible);
                     }}
