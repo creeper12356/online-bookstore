@@ -23,7 +23,7 @@ const AdminBookPage = () => {
     const [messageError, ErrorSnackbar] = useErrorHandler();
 
     useEffect(() => {
-        getBookList('', 0, 10);
+        getBookList('', 0, 100);
     }, []);
 
     return (
