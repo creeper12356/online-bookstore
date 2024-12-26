@@ -37,3 +37,23 @@ export async function getBookAuthor(title) {
     const url = `${PREFIX}/getauthor/books/author/${title}`;
     return await getJsonOrThrow(url);
 }
+
+export async function getBookComments(id) {
+    const url = `${PREFIX}/books/${id}/comments`;
+    return await getJsonOrThrow(url);
+}
+
+export async function createBookComment(id, contentJson) {
+    const url = `${PREFIX}/books/${id}/comments`;
+    return await postJsonOrThrow(url, contentJson);
+}
+
+export async function createBookCommentReply(bookId, replyToId, contentJson) {
+    const url = `${PREFIX}/books/${bookId}/comments/${replyToId}/replies`;
+    return await postJsonOrThrow(url, contentJson);
+}
+
+export async function getBookTags(id) {
+    const url = `${PREFIX}/books/${id}/tags`;
+    return await getJsonOrThrow(url);
+}

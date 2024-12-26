@@ -109,7 +109,7 @@ const CartPage = () => {
                             userId: user.id,
                         });
                         console.log('message: ' + JSON.stringify(message));
-                        createWebSocketConnection('ws://localhost:8000/orders', message)
+                        createWebSocketConnection('ws://localhost:8080/orders', message)
                             .then(socket => {
                                 console.log('socket: ' + JSON.stringify(socket));
                                 socket.onmessage = (msg) => {

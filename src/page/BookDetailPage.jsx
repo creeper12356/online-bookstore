@@ -1,25 +1,33 @@
-import {useParams} from "react-router";
-import {useEffect, useState} from "react";
-import {getBook} from "../service/book";
-import {Box, Button, Divider} from "@mui/material";
-import PriceBox from "../components/PriceBox";
+import { Box, Button, Chip, Divider } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import CommentArea from "../components/CommentArea";
-import {PrivateLayout} from "../components/Layout";
-import {NavigatorIndexContext} from "../lib/Context";
-import { addCartItem } from "../service/cart";
+import { PrivateLayout } from "../components/Layout";
+import PriceBox from "../components/PriceBox";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { useOkHandler } from "../hooks/useOkHandler";
+import { NavigatorIndexContext } from "../lib/Context";
+import { getBook, getBookTags } from "../service/book";
+import { addCartItem } from "../service/cart";
 
 const BookDetailPage = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const [bookDetail, setBookDetail] = useState({});
+    const [bookTags, setBookTags] = useState([]);
     const [messageOk, OkSnackbar] = useOkHandler();
     const [messageError, ErrorSnackbar] = useErrorHandler();
 
     const getBookDetail = (id) => {
         getBook(id)
-            .then(result => { setBookDetail(result);})
+            .then(result => { setBookDetail(result); })
             .catch(e => { console.log(e); });
+        getBookTags(id)
+            .then(result => {
+                setBookTags(result);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     };
     const onAddToCartClicked = async () => {
         addCartItem(id).then(res => {
@@ -35,7 +43,7 @@ const BookDetailPage = () => {
     return (
         <NavigatorIndexContext.Provider value={-1}>
             <PrivateLayout>
-                <Box sx={{display: 'flex', flexDirection: 'row'}}>
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Box
                         component="img"
                         sx={{
@@ -47,6 +55,14 @@ const BookDetailPage = () => {
                     />
                     <Box>
                         <h1>{bookDetail.title}</h1>
+                        {
+                            bookTags.map((tag, idx) => (
+                                <Chip key={idx} label={tag}
+                                    // 简单的循环取颜色
+                                    color={["default", "primary", "secondary", "error", "info", "success"][idx % 6]} 
+                                />
+                            ))
+                        }
                         <Divider className="book-detail-divider-text">基本信息</Divider>
                         <Box className="book-detail-box">{`作者：${bookDetail.author}\t销量：${bookDetail.sales}\t库存：${bookDetail.stock}`}</Box>
                         <Box className="book-detail-box">{`ISBN: ${bookDetail.isbn}`}</Box>
@@ -54,7 +70,7 @@ const BookDetailPage = () => {
                         <Box className="book-detail-box">{bookDetail.description}</Box>
                         <PriceBox price={bookDetail.price} />
                         <Box sx={{
-                            display:'flex',
+                            display: 'flex',
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}>
@@ -75,7 +91,7 @@ const BookDetailPage = () => {
                         </Box>
                     </Box>
                 </Box>
-                <CommentArea />
+                <CommentArea bookId={id} />
                 <OkSnackbar />
                 <ErrorSnackbar />
             </PrivateLayout>
