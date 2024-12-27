@@ -57,3 +57,11 @@ export async function getBookTags(id) {
     const url = `${PREFIX}/books/${id}/tags`;
     return await getJsonOrThrow(url);
 }
+export async function getAllTags() {
+    const url = `${PREFIX}/books/tags`;
+    return await getJsonOrThrow(url);
+}
+export async function getSimilarBooksByTag(tag) {
+    const url = `${PREFIX}/books/filter/tags/${tag}`;
+    return await getJsonOrThrow(url);
+}
