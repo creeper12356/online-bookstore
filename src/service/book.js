@@ -1,9 +1,33 @@
-import { delJsonOrThrow, getJsonOrThrow, postJsonOrThrow, PREFIX, putJsonOrThrow} from "./common";
+import { BASE_URL, delJsonOrThrow, getJsonOrThrow, postJsonOrThrow, postRaw, postRawOrThrow, PREFIX, putJsonOrThrow } from "./common";
 
 export async function getBooks(q, page, pagesize){
     let url = `${PREFIX}/books?q=${q}&page=${page}&pagesize=${pagesize}`;
     return await getJsonOrThrow(url);
 }
+
+export async function getBooksGraphQL(q) {
+    let url = `${BASE_URL}/graphql`;
+    const query = `
+    query {
+        bookByTitle(title: "${q}") {
+            id,
+            title,
+            author,
+            description,
+            isbn,
+            price,
+            cover,
+            sales,
+            stock,
+        }
+    }
+    `;
+    let res = await postJsonOrThrow(url, {query: query});
+    let books = res.data.bookByTitle;
+    // console.log("books", books);
+    return books;
+}
+
 export async function getBook(id) {
     let url = `${PREFIX}/books/${id}`;
     return await getJsonOrThrow(url);

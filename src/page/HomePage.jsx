@@ -9,7 +9,7 @@ import BookCard from "../components/BookCard";
 import { PrivateLayout } from "../components/Layout";
 import SearchBar from "../components/SearchBar";
 import { NavigatorIndexContext } from "../lib/Context";
-import { getBookAuthor, getBooks, getSimilarBooksByTag } from "../service/book";
+import { getBookAuthor, getBooks, getBooksGraphQL, getSimilarBooksByTag } from "../service/book";
 
 const HomePage = () => {
     const [bookList, setBookList] = useState([]);
@@ -29,6 +29,11 @@ const HomePage = () => {
                 setBookList(result.books);
             })
             .catch(e => { console.log(e); });
+        // getBooksGraphQL(q)
+        //     .then(result => {
+        //         setPageCount(1);
+        //         setBookList(result);
+        //     });
         getBookAuthor(q)
             .then(res => {
                 setBookAuthor(res.author);
